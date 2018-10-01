@@ -45,7 +45,7 @@ def VerProductos(request):
 	print "la fecha",fecha
 	inicio="%s-%s-01" % (fecha.year,fecha.month)
 	productos=Producto.objects.filter(fecha_registro__range=(inicio,fecha)).order_by("-id")
-	clientes=Cliente.objects.filter(estado=0).order_by("-id")
+	clientes=Cliente.objects.filter(estado=True).order_by("-id")
 	cant=Producto.objects.filter(fecha_registro__range=(inicio,fecha)).count()
 	dic={
 		'productos':productos,
@@ -124,12 +124,12 @@ def NewElemento(request):
 
 def VerElementos(request):
 	datos=Elemento.objects.all().order_by('-id')
-	cliente=Elemento.objects.filter(estado=0).count()
+	cliente=Elemento.objects.filter(estado=True).count()
 	return render(request,'producto/VerElementos.html',{'datos':datos,'cliente':cliente})
 
 def por_cliente(request, id):
 	productos=Producto.objects.filter(Cliente_id=int(id)).order_by("-id")
-	cant=Producto.objects.filter(estado=0,Cliente_id=int(id)).count()
+	cant=Producto.objects.filter(estado=True,Cliente_id=int(id)).count()
 	dic={
 		'productos':productos,
 		'cant':cant
@@ -219,7 +219,7 @@ def CrearReportes(request):
 	print "la fecha",fecha
 	inicio="%s-%s-01" % (fecha.year,fecha.month)
 	productos=Producto.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).order_by("-id")
-	clientes=Cliente.objects.filter(estado=0).order_by("-id")
+	clientes=Cliente.objects.filter(estado=True).order_by("-id")
 	cant=Producto.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).count()
 	dic={
 		'productos':productos,
