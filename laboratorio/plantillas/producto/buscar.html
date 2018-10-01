@@ -1,0 +1,28 @@
+<script type="text/javascript">
+	$(".aa a").on('click',Escogido);
+	function Escogido(e){
+		e.preventDefault();
+		var ulrs=$(this).attr("href");
+		//alert(ulrs);
+		$.ajax({
+			type:'GET',
+			url:ulrs,
+			success:function(resp){
+				$("#FormAjax").html(resp);
+			}
+		});
+	}
+</script>
+{% for i in resultados %}
+<li class="aa">
+	<a href="/RegistroProductoView/{{i.id}}/">
+	<strong>{{i.Nombre|upper}} {{i.Apellidos|upper}} - Nro. de Carnet:{{i.Ci_Nit}} - Celular: {{i.Celular}}</strong>
+	</a>
+</li>
+{% empty %}
+
+	<strong><a href="#" onclick="NewClient()">No se encontró coincidencias, busque por otro dato, o bien registre uno nuevo</a></strong>
+{% endfor %}
+<style type="text/css">
+.aa:hover{background: white;}
+</style>

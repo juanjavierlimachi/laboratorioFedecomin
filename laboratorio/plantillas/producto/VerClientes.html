@@ -1,0 +1,83 @@
+<div class="table-responsive">
+<table class="table table-hover table-striped">
+	<tr><td colspan="7" align="center">LISTA DE CLIENTES REGISTRADOS</td></tr>
+<tr class="success">
+	<td>Ficha</td>
+	<td>Nombre completo</td>
+	<td>CI/NIT</td>
+	<td>Teléfono</td>
+	<td>Fecha Registro</td>
+	<td>Opciones</td>
+	<td>estado</td>
+</tr>
+{% for i in datos %}
+		<tr>
+			<td>
+			<a href="/ok/" id="/por_cliente/{{i.id}}/" title="Ir a detalles">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a> 
+				{{i.Ficha}}</td>
+			<td>{{i.Nombre|upper}} {{i.Apellidos|upper}}</td>
+			<td>{{i.Ci_Nit}}</td>
+			<td>{{i.Celular}}</td>
+			<td>{{i.fecha_registro}}</td>
+			<td>
+				{% if user.is_active and user.is_superuser %}
+				<a href="/editCliente/{{i.id}}/"><span class="glyphicon glyphicon-pencil"></span></a>
+				{% else %}
+					<span class="glyphicon glyphicon-info-sign"></span>
+				{% endif %}
+			</td>
+			<td>{% if i.estado %}
+				<a href="/deleteCliente/{{i.id}}/" title="Dar de baja esta información"><span><img src="/static/img/icon_success.gif"></span></a>
+			{% else %}
+			<a href="/altaCliente/{{i.id}}/" style="color:red;" title="Dar de alta esta información"><span><img src="/static/img/icon_error.gif"></span></a>
+			{% endif %}
+		</td>
+		</tr>
+{% endfor %}
+<tr> <td>Total Registros:{{cliente}}</td> </tr>
+</table>
+<ul class="pager">
+		{% if contenido.has_previous %}
+			  <li><a href="/VerClientes/?page={{ contenido.previous_page_number }}">Anterior</a></li>
+		{% endif %}
+		 <span class="current">
+            Página {{ contenido.number }} de {{ contenido.paginator.num_pages }}.
+        </span>
+        {% if contenido.has_next %}
+			  <li><a href="/VerClientes/?page={{ contenido.next_page_number }}">Siguiente</a></li>
+		{% endif %}
+	</ul>
+</div>
+<script type="text/javascript">
+$(".table tr td #es").on("click",function(e){
+		e.preventDefault();
+			$.ajax({
+				type:'GET',
+				url:$(this).attr("href"),
+				beforeSend:Espera,
+				success:function(resp){
+					$("#FormAjax").html(resp);
+				}
+			});
+			 function Espera(){
+		      $("#FormAjax").html('<img src="/static/img/log.gif" id="icono"></img><br>Procesando...');
+		    }
+	});
+$(".pager li a").on("click",function(e){
+		e.preventDefault();
+			$.ajax({
+					type:'GET',
+					url:$(this).attr("href"),
+					beforeSend:Espera,
+					success:function(resp){
+						$("#FormAjax").html(resp);
+					}
+			});
+			 function Espera(){
+		      $("#FormAjax").html('<img src="/static/img/log.gif" id="icono"></img><br>Procesando...');
+		    }
+	});
+</script>
+<script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>

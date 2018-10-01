@@ -1,0 +1,30 @@
+<table class="table table-hover table-striped">
+	<tr class="success">
+		<td align="center" colspan="8"><br><br>  <strong>ANALISIS POR: </strong>  {{producto.Elemento.Nombre_del_Elemento|upper}}</td>
+	</tr>
+	<tr>
+		<td colspan="8"><br><br> <strong>PERTENECIENTE A:</strong> {{producto.Cliente.Nombre|upper}} {{producto.Cliente.Apellidos|upper}}</td>
+		
+
+	</tr>
+	<tr><td colspan="8"><br><br> <strong>LOTE NRO. </strong> {{producto.Nro_de_Lote|upper}}</td></tr>
+	<tr>
+		<td colspan="4"><br><br> <strong>PROCEDENCIA:</strong> {{producto.Procedencia.Procedencia|upper}}</td>
+		<td colspan="4"><br><br> <strong>OBS. :</strong> {{producto.Observaciones}}</td>
+	</tr>
+	<tr>
+	
+	</tr>
+
+		<tr>
+			<td align="center" colspan="8"><br> <br><br><strong>
+				{% for i in resultados %}
+						{{i.Elemento|upper}}	 {{i.Resultado}}  % {{i.Abreviatura}} <br> <br>
+				{% empty %}
+					S/R
+				{% endfor %}</strong> 
+			</td>
+		</tr>
+
+<tr><td></td><td><br><br>{{fe}}</td></tr>
+</table>

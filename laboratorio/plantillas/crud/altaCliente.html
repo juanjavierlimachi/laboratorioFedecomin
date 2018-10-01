@@ -1,0 +1,19 @@
+<label>Esta seguro dar de alta al cliente:  <br>
+	<strong>{{dato.Nombre|upper}} {{dato.Apellidos|upper}}</strong>
+</label>
+ <div class="modal-footer">
+    <button class="btn btn-danger" type="button" onclick="DelCliente();">Confirmar</button>
+  </div>
+  <script type="text/javascript">
+function DelCliente(){
+	$.ajax({
+		type:'GET',
+		url:'/Alta_cliente/'+{{dato.id}}+'/',
+		success:function(resp){
+			$("#ventanas").html(resp);
+			VerClientes();
+		}
+	});
+}
+
+  </script>

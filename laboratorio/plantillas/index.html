@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>LABORATORIO QUÍMICO FEDECOMIN</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.5 -->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{STATIC_URL}}css/AdminLTE.min.css">
+  
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/formularios.css">
+<link rel="stylesheet" href="{{STATIC_URL}}css/jquery-ui.css" />
+  <link rel="stylesheet" href="{{STATIC_URL}}css/skin-blue.min.css">
+<script type="text/javascript">
+function updatePerfilUser(){
+    $.ajax({
+      type:'GET',
+      url:'/editarperfil/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+  function NewClient(){
+    $.ajax({
+      type:'GET',
+      url:'/NewClient/',
+      beforeSend:Espera,
+      success:function(resp){
+          $("#FormAjax").html(resp);
+      }
+    });
+    function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+function VerClientes(){
+    $.ajax({
+      type:'GET',
+      url:'/VerClientes/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+    function Espera(){
+       $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+function VerProductos(){
+  $.ajax({
+      type:'GET',
+      url:'/VerProductos/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
+function RegistroProducto(){
+  $.ajax({
+      type:'GET',
+      url:'/BuscarCliente/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
+function NewUser(){
+    $.ajax({
+      type:'GET',
+      url:'/nuevo/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+function DatosUser(){
+    $.ajax({
+      type:'GET',
+      url:'/DatosUsuario/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+    function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+function VerElementos(){
+    $.ajax({
+      type:'GET',
+      url:'/VerElementos/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+    function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+function NewElemento(){
+    $.ajax({
+      type:'GET',
+      url:'/NewElemento/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+  }
+function NewProcedencias(){
+    $.ajax({
+      type:'GET',
+      url:'/NewProcedencias/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
+function CrearReportes(){
+  $.ajax({
+      type:'GET',
+      url:'/crearReportes/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
+  </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>L.</b>Q.F</span>
+      <!-- logo for regular state and mobile devices -->
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation
+        </span>                                                                                                             <span class="logo-lg"><b></b>LABORATORIO QUÍMICO FEDECOMIN</span>
+      </a>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+         
+
+         
+         
+          <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <!-- The user image in the navbar-->
+              <span class="glyphicon glyphicon-user"></span>
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <span class="hidden-xs">{{user.get_full_name|upper}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- The user image in the menu -->
+              <li class="user-header">
+                <p>
+                   {% if user.is_superuser %}
+                      Nombre de usuario: <br>{{user|upper}}<br>
+                      <small>{{now}}</small>
+                  {% else %}
+                    Nombre de usuario: <br>{{user|upper}}<br>
+                      <small>{{now}}</small>
+                  {% endif %}
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <!-- <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+                /.row -->
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" onclick="updatePerfilUser()" class="btn btn-default btn-flat">Perfil</a>
+                </div>
+                <div class="pull-right">
+                  <a href="/cerrar/" class="btn btn-default btn-flat">Salir</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="{{STATIC_URL}}img/user.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info"><br>
+          <p>{% if user.is_superuser %}
+                    Administrador
+                  {% else %}
+                    Supervisor
+                  {% endif %}</p>
+         
+        </div>
+      </div>
+
+      <!-- search form (Optional) -->
+      <form action="/buscar/" method="post" id="fbuscar" class="sidebar-form">{% csrf_token %}
+        <div class="input-group">
+          <input type="text" name="q" id="id_texto" class="form-control" title="Buscar por nombre, Apellido, Nro. de Carnet" placeholder="Buscar cliente" required>
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+       <!-- <li class="header">HEADER</li>
+         Optionally, you can add icons to the links -->
+        <li class="active"><a href="/"><i class="glyphicon glyphicon-home"></i> <span>Inicio</span></a></li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="NewClient()">Nuevo Cliente</a></li>
+            <li><a href="#" onclick="VerClientes()">Ver Clientes</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span>Ingreso</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="RegistroProducto()">Nuevo Ingreso</a></li>
+            <li><a href="#" onclick="VerProductos()">Ver Ingresos</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>Elementos</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="NewElemento()">Nuevo Elemento</a></li>
+            <li><a href="#" onclick="VerElementos()">Ver Elemntos</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-briefcase"></i> <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="CrearReportes()">Crear reportes</a></li>
+            
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="NewUser()">Nuevo Usuario</a></li>
+            <li><a href="#" onclick="DatosUser()" >Ver Usuarios</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) ESTE ES UN TITULO
+    <section class="content-header">
+     
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>SISTEMAS DE ALMACENES</a></li>
+      </ol>-->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Your Page Content Here -->
+      {% block contenidos %} {% endblock %}
+<div id="FormAjax"></div>
+<div id="DatosAjax"></div>
+<div id="ventanas"></div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+   
+    <!-- Default to the left -->
+  </footer>
+
+  <!-- Control Sidebar DERECHA -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane active" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript::;">
+              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+              <div class="menu-info">
+                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+        <ul class="control-sidebar-menu">
+          <li>
+            <a href="javascript::;">
+              <h4 class="control-sidebar-subheading">
+                Custom Template Design
+                <span class="label label-danger pull-right">70%</span>
+              </h4>
+
+              <div class="progress progress-xxs">
+                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Stats tab content -->
+      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        <form method="post">
+          <h3 class="control-sidebar-heading">General Settings</h3>
+
+          <div class="form-group">
+            <label class="control-sidebar-subheading">
+              Report panel usage
+              <input type="checkbox" class="pull-right" checked>
+            </label>
+
+            <p>
+              Some information about this general settings option
+            </p>
+          </div>
+          <!-- /.form-group -->
+        </form>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.0 -->
+<script src="{{STATIC_URL}}js/jQuery-2.2.0.min.js"></script>
+<!-- Bootstrap 3.3.5 -->
+<script src="{{STATIC_URL}}js/bootstrapp.min.js"></script>
+<!-- AdminLTE App -->
+<script src="{{STATIC_URL}}js/app.min.js"></script>
+{% block js %}  {% endblock %}
+
+<script src="{{STATIC_URL}}js/jquery-ui.js"></script>
+<script type="text/javascript">
+$(document).ready(Sheart);
+    function Sheart(){ 
+      var tbuscar=$("#id_texto").attr('autocomplete','off');
+      tbuscar.keypress(buscar);
+  }
+  function buscar(){
+    $.ajax({
+        type:'GET',
+        url:'/buscar/',
+        data:$("#fbuscar").serialize(),
+        success:resultado,
+        error:errores
+    });
+    console.log($("#fbuscar").serialize());
+}
+function resultado(data){
+    $("#FormAjax").fadeIn("slow");
+    console.log(data);
+    $("#FormAjax").html(data);
+}
+function errores(){
+    alert ("Error");
+}
+$("#fbuscar").on("submit",function(e){
+        e.preventDefault();
+        var datos=$(this).serialize();
+        //alert(datos);
+          $.ajax({
+              type:"POST",
+              url:"/buscar/",
+              data:datos,
+              success:function(resp){
+                $("#FormAjax").fadeIn("slow");
+                //alert(resp);
+                $("#FormAjax").html(resp);
+                
+              }
+          });
+      });
+</script>
+</body>
+</html>

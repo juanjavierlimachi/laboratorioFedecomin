@@ -1,0 +1,49 @@
+<style type="text/css">
+    #leftt{
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+            function ventanaSecundaria(URL){
+                window.open(URL,"Editar","width=300,height=300,scrollbars=NO")
+            }
+        </script>    
+<link rel="stylesheet" type="text/css" href="/static/css/formularios.css">
+<!-- <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css"> -->
+    
+<style type="text/css">
+    #leftt{
+        display: none;
+    }
+    .card h5{
+        text-align: center;
+    }
+    .card .perfil{
+        width: 90%;height: 100px; margin: auto;border: 1px solid black;
+    }
+    .card .perfil li{
+        width: 45%;margin: auto;float: left;margin-left: 15px;list-style: none;
+    }
+    .card a{
+        margin-left: 50px;
+    }
+   
+</style>
+  <body class="valign-wrapper2">
+<div class="card">
+     <h5>Datos de Perfil</h5>
+    {% for info in dato %}
+        {% for user in usuario %}
+            {% if info.usuario_id == user.id %}
+                    <ul class='perfil'><li><label>Nombre de Usuario:</label>{{user.username}}</li>
+                    <li><label>Nombre(s):</label>{{user.get_full.name}}</li>
+                    <li><label>Apellido:</label>{{user.last_name}}</li>
+                   <li> <label>Numero de Ci:</label>{{info.ci}}</li></ul>
+                    <!--  <button class="waves-effect waves-light btn" type="submit">Guardar</button> -->
+                
+             {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <a class="waves-effect waves-light btn" href="javascript:ventanaSecundaria('/editarperfil/')">Editar Datos</a>
+    <a class="waves-effect waves-light btn" href="/editarcon/">Editar Password</a>
+</div>

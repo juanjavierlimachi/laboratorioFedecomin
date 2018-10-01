@@ -1,0 +1,38 @@
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/AgregarResultado/'+{{id}}+'/',
+			data: dato,
+			success:function(resp){			
+				if(resp=='ok'){
+					$.ajax({
+						type:'GET',
+						url:'/kardex/'+{{id}},
+						beforeSend:Espera,
+						success:function(res){
+							$('#categorias').html(res);
+							$('#ventanas').html("Se registró el resultado correctamente.")
+						}
+					});
+					function Espera(){
+		        		$("#categorias").html('<img src="{{STATIC_URL}}img/loader.gif"></img>');
+		     		}
+				}else{alert("Datos Incorrectos !!")}
+			}
+		});
+		
+	});
+</script>
+<div class="table-responsive">
+<div class="card">
+	<p id="texto">Registrar resultado del análisis</p>
+<form method="POST" id="Tipo">{% csrf_token %}
+	{{forms}}<br>
+	<button class="btn btn-success">Registrar</button>
+</form>
+</div>
+</div>

@@ -1,0 +1,49 @@
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/NewClient/',
+			data: dato,
+			error:errores,
+			success:function(resp){
+
+				if(resp!=''){
+					$.ajax({
+						type:'GET',
+						url:"/RegistroProductoView/"+resp+"/",
+						success:function(resp){
+							$("#FormAjax").html(resp);
+						}
+					});
+				}else{alert("Datos Incorrectos !!")}
+			}
+		});
+		function errores(){
+		    alert("Datos Incorrectos !!");
+		}
+	});
+$(document).ready(function(){
+	$('#id_Cliente').on('change',inicio);
+    function inicio(){
+        var cliente = $(this).val();
+        if(cliente == "CLIENTE INSTITUCIONAL"){
+        		document.getElementById("id_Apellidos").disabled = true;
+        }else
+        {
+        	document.getElementById("id_Apellidos").disabled = false;
+        }
+    }
+});
+</script>
+<div class="table-responsive">
+<div class="card">
+	<p id="texto">Registrar Cliente ó Empresa</p>
+<form method="POST" id="Tipo">{% csrf_token %}
+	{{forms}}<br>
+	<button class="btn btn-success">Registrar</button>
+</form>
+</div>
+</div>

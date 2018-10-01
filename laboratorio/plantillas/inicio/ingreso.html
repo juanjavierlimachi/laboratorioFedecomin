@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% block usuario %}
+<script type="text/javascript">
+/*$(document).ready(function(){
+    $("a").click(function(e){
+        e.preventDefault();
+        var enlase=$(this).attr("href");
+        //alert(enlase);
+        $.ajax({
+            type:'GET',
+            url:enlase,
+            success:function(resp){
+                        console.log(resp);
+                        $("#response").html(resp);
+                }
+        });
+    });
+});*/
+</script>
+<a href="/datos/{{usuario.id}}">hola:{{usuario.username|upper}}</a>
+{% endblock %}

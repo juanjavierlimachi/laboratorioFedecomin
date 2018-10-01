@@ -1,0 +1,27 @@
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/NewElemento/',
+			data: dato,
+			success:function(resp){			
+				if(resp=='ok'){
+					VerElementos();
+				}else{alert("Datos Incorrectos !!")}
+			}
+		});
+		
+	});
+</script>
+<div class="table-responsive">
+<div class="card">
+	<p id="texto">Registrar Nuevo Elemento</p>
+<form method="POST" id="Tipo">{% csrf_token %}
+	{{forms}}<br>
+	<button class="btn btn-success">Registrar</button>
+</form>
+</div>
+</div>

@@ -1,0 +1,41 @@
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/editProducto/'+{{ids}}+'/',
+			data: dato,
+			error:errores,
+			success:function(resp){
+				$(".card").html(resp);
+				$.ajax({
+					type:'GET',
+					url:'/kardex/'+{{ids}}+'/',
+					success:function(resp){
+						$("#FormAjax").html(resp);
+						
+						
+					}
+				});
+				
+			}
+		});
+		function errores(){
+		    alert("Datos Incorrectos !!");
+		}
+	});
+</script>
+<div class="table-responsive">
+<div class="card">
+	<p id="texto">Editar Información</p>
+<form method="POST" id="Tipo">{% csrf_token %}
+	{{forms}}<br>
+	<button class="btn btn-success">Editar</button>
+</form>
+</div>
+</div>
+<style type="text/css">
+.card form select{width: 200px; height: 25px;margin-bottom: 10px;}
+</style>

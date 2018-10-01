@@ -1,0 +1,46 @@
+<div class="formulariooo">  
+<style type="text/css">
+    .formulariooo{width: 50%; height: auto; margin: auto;}
+</style>
+<h4>Bienvenido:{{usuario|upper}}</h4>
+<p>Por favor ingresa tu número de carnet. para activar tu cuenta.</p>
+<form method="GET" id="active">{% csrf_token %}
+    <input type='number' id='ci' placeholder="Ejem: 123456" required><br><br>
+    <input type='submit' value="Activar Cuenta" id='activar' class="btn btn-success">
+    <a href="/cerrar/" class="btn btn-danger">Salir</a>
+</form>
+<div class="datos"></div>
+</div>
+<script src="/static/js/jquery.min3.js"></script>
+ <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+    <script type="text/javascript">
+     $(document).ready(function(){
+        $('#active').on('submit', Verificar);
+        function Verificar(e){
+            e.preventDefault();
+            var use= $('#ci').val();
+            $.ajax({
+                type:'GET',
+                url:'/ActivarCuenta/',
+                data:{'use': use },
+                beforeSend: entesEnviar,
+                success:function (resp){
+                  // $('.datos').html('<p>'+resp+'</p>');
+                   //window.location='/privado/'
+                   if (resp=='Deshabilitado'){
+                    $(".datos").html("Su cuenta a sido Deshabilitado. consulte con el administrador.");
+                   }
+                   if(resp=="bien"){
+                        window.location='/';
+                   }
+                   if(resp=="Error"){
+                     $(".datos").html("Error el Usuario no esta activo en el sistema por favor Verifique sus datos o de lo contrario consulte con el administrador del sistema Gracias.");
+                   }
+                }
+            });
+            function entesEnviar(){
+                $('.datos').text("Verificando...")
+            }
+        }
+    });
+</script>

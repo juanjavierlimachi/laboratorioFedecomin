@@ -1,0 +1,224 @@
+<script type="text/javascript">
+$("#categorias table tr td #salida").disabled;
+$(document).ready(function(){
+    $("#formu").hide();
+  
+$('#cate').on('change',inicio);
+    function inicio(){
+        var id = $(this).val();
+        console.log(id); //aki vemos k el id se esta inprimiendo
+        $.ajax({
+            type: 'GET',
+            url:"/por_cliente/"+id+"",
+            beforeSend:Espera,
+            success: function(data){
+                console.log(data);
+                $('#categorias').html(data);
+            }
+        });
+        function Espera(){
+        $("#categorias").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+      }
+    }
+
+var tbuscar=$("#Pro").attr('autocomplete','off');
+      tbuscar.keypress(buscarProducto);
+      function buscarProducto(){
+          $.ajax({
+              type:'GET',
+              url:'/buscarProducto_view/',
+              data:$("#Busqueda").serialize(),
+              success:resultado,
+              error:errores
+          });
+        console.log($("#Busqueda").serialize());
+      }
+        function resultado(data){
+            $("#categorias").fadeIn("slow");
+            console.log(data);
+            $("#categorias").html(data);
+        }
+        function errores(){
+            alert("Error");
+        }
+      $("#Busqueda").on("submit",function(e){
+        e.preventDefault();
+        var datos=$(this).serialize();
+        //alert(datos);
+          $.ajax({
+              type:"POST",
+              url:"/buscarProducto_view/",
+              data:datos,
+              success:function(resp){
+                $("#categorias").fadeIn("slow");
+                $("#categorias").html(resp);
+              }
+          });
+      });
+
+});
+function update_pro(){
+    $.ajax({
+      type:'GET',
+      url:'/VerProductos/',
+      beforeSend:Espera,
+      success:function(resp){
+          $("#FormAjax").html(resp);
+      }
+  });
+      function Espera(){
+        $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+      }
+}
+function InpremeDatos(){
+    $.ajax({
+      type:'GET',
+      url:'/get_retorna_salidas/',
+      beforeSend:Espera,
+      success:function(resp){
+          $("#FormAjax").html(resp);
+      }
+  });
+      function Espera(){
+        $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+      }
+}
+function Files(){
+    $("#ventanas").dialog({
+            modal:true,
+            show:"blind",
+            width: 600,
+            hide:"explode",
+            title:"Detalle:",
+            position: "center"
+        }); 
+    $.ajax({
+        type:'GET',
+        url:'/uploadFiles/',
+        success:function(resp){
+            $('#ventanas').html(resp);
+        }
+    });
+}
+function VerImg(){
+  //alert("ya te mostrare la imagen");
+}
+function update_session(){
+  $("#ventanas").text("Esta seguro de limpiar la Bandeja de Movimientos?");
+  $("#ventanas").dialog({
+     modal:true,
+            show:"blind",
+            width: 600,
+            hide:"explode",
+            title:"Detalle:",
+            position: "center",
+            resizable: false,
+            buttons: [
+              {
+                text: "Si",
+                click: function() {
+                  $.ajax({
+                    type:'GET',
+                    url:'/update_session/',
+                    success:function(resp){
+                      $("#ventanas").html(resp);
+                        $.ajax({
+                          type:'GET',
+                          url:'/cantidadIngresos/',
+                          success:function(resp){
+                            $(".tasks-menu .label-danger").html(resp);
+                            $(".ui-dialog-buttonpane").hide();
+                          }
+                        });
+
+                        $.ajax({
+                          type:'GET',
+                          url:'/cantidadSalida/',
+                          success:function(resp){
+                            $(".notifications-menu .label-warning").html(resp);
+                            $(".ui-dialog-buttonpane").hide();
+                          }
+                        });
+                    }
+                  });
+                }
+              }
+            ]
+      });
+}
+function borrado(){
+  $.ajax({
+    type:'GET',
+    url:'/update_session/',
+    success:function(resp){
+      $("#ventanas").html(resp);
+    }
+  });
+}
+</script>
+<div class="table-responsive">
+<div id="controles">
+<select id="cate">
+                <option>FILTRAR POR CLIENTE</option>
+                {% for i in clientes %}
+                    <option value='{{i.id}}'>{{i.Nombre|upper}} {{i.Apellidos|upper}}</option>
+                {% endfor %}
+</select>
+<div class="btn-group">
+
+<button type="button" onclick="update_pro();" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
+
+</div>
+ <form method="POST" id="Busqueda">{% csrf_token %}
+    <input type="text" name="p" id="Pro" placeholder="Buscar Producto" class="form-control" title="Busque un producto, por Nro. de lote" required/>
+    <span class="input-group-btn">
+    <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button></span>
+</form>
+</div>
+<hr>
+<div id="categorias">
+<table class="table table-hover table-striped">
+	<tr><td colspan="11" align="center">LISTA DE PRODUCTOS DEL MES ACTUAL</td></tr>
+<tr class="success">
+	<td>Ficha</td>
+	<td>Fecha</td>
+	<td>Nombre</td>
+	<td>Procedencia</td>
+	<td>Nro. de Lote</td>
+	<td>Elemento</td>
+	<td>Precio</td>
+	<td>Cantidad</td>
+	<td>Total</td>
+	<td>estado</td>
+</tr>
+{% for i in productos %}
+	<tr>
+		<td>{{i.Cliente.Ficha}}</td>
+		<td></td>
+		<td>{{i.Cliente.Nombre|upper}} {{i.Cliente.Apellidos|upper}}</td>
+		<td>{{i.Procedencia}}</td>
+		<td><a href="/ok/" id="/kardex/{{i.id}}/">{{i.Nro_de_Lote}}</a></td>
+		<td>{{i.Elemento.Abreviatura}}</td>
+		<td>{{i.Precio}}</td>
+		<td>{{i.Cantidad}}</td>
+		<td>{{i.Total}}</td>
+		<td>{% if i.estado %}
+				<span><img src="/static/img/icon_success.gif"></span>
+			{% else %}
+				<span><img src="/static/img/icon_error.gif"></span>
+			{% endif %}
+		</td>
+	</tr>
+  {% empty %}
+  <tr><td colspan="11" align="center"><strong>No hay registros para este mes</strong></td></tr>
+{% endfor %}
+<tr><td colspan="2" align="center">Total registros: {{cant}}</td></tr>
+</table>
+</div>
+<script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>
+<style type="text/css">
+#controles{height: 30px}
+#controles form{width: 25%;float: right;margin-right: 0px;}
+#controles form input{width: 70%;float: left; }
+table tr td p{height: 20px;width: 20px; text-align: center;color: white;margin-bottom: -10px;border-radius: 360px}
+</style>

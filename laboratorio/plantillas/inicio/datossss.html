@@ -1,0 +1,38 @@
+<style type="text/css">
+.helptext {display: none;}
+</style>
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/editarperfil/',
+			data: dato,
+			success:function(resp){
+				console.log(resp);
+				$('#FormAjax').html(resp);
+			}
+		});
+	});
+</script>
+<div class="card">
+<form method="POST" id="Tipo">{% csrf_token %}
+  {{ user_form }}
+    {{ perfil_form }}<br>
+   <button class="btn btn-success">Guardar</button>
+    <a class="btn btn-default" href="#" onclick="Passwordd()">Cambiar Contraceña</a>
+</form>
+</div>
+<script type="text/javascript">
+function Passwordd(){
+	$.ajax({
+		type:"GET",
+		url:"/editarcontracenia/",
+		success:function(resp){
+			$("#FormAjax").html(resp);
+		}
+	});
+}
+</script>

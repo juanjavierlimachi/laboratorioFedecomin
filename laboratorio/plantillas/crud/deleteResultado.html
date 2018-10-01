@@ -1,0 +1,25 @@
+<label>Esta Seguro dar de baja el resultado: <br>
+	<strong>{{dato.Resultado|upper}}</strong>
+</label>
+ <div class="modal-footer">
+    <button class="btn btn-danger" type="button" onclick="DelCliente();">Confirmar</button>
+  </div>
+  <script type="text/javascript">
+function DelCliente(){
+	$.ajax({
+		type:'GET',
+		url:'/Delete_resultado/'+{{dato.id}}+'/',
+		success:function(resp){
+			$("#ventanas").html(resp);
+			$.ajax({
+					type:'GET',
+					url:'/kardex/'+{{dato.producto.id}}+'/',
+					success:function(resp){
+						$("#FormAjax").html(resp);
+					}
+			});
+		}
+	});
+}
+
+  </script>

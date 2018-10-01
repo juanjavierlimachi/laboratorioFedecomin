@@ -1,0 +1,31 @@
+
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+				$.ajax({
+					type:'POST',
+					url:'/RegistroProductoView/'+{{ids}}+'/',
+					data: dato,
+					success:function(resp){
+						console.log(resp);
+						//$('#FormAjax').html(resp);
+						if (resp=='ok'){
+								VerProductos();
+							}
+							else{alert("El dato es Incorrecto.")}
+					}
+				});
+	});
+
+</script>
+<div class="card">
+	<p id="texto">Registrar Producto</p>
+<form method='POST' id='Tipo'>{% csrf_token %}
+{{forms}}<br>
+<button class="btn btn-success">Registrar</button>
+</form>
+</div>
+<style type="text/css">
+.card form select{width: 200px; height: 25px;margin-bottom: 10px;}
+</style>
