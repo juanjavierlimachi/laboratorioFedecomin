@@ -178,7 +178,7 @@ function borrado(){
 <hr>
 <div id="categorias">
 <table class="table table-hover table-striped">
-	<tr><td colspan="11" align="center">LISTA DE PRODUCTOS DEL MES ACTUAL</td></tr>
+	<tr><td colspan="11" align="center">LISTA DE PRODUCTOS DEL MES ACTUAL: {% now "m - Y" %}</td></tr>
 <tr class="success">
 	<td>Ficha</td>
 	<td>Fecha</td>
@@ -212,12 +212,12 @@ function borrado(){
   {% empty %}
   <tr><td colspan="11" align="center"><strong>No hay registros para este mes</strong></td></tr>
 {% endfor %}
-<tr><td colspan="2" align="center">Total registros: {{cant}}</td></tr>
+<tr><td colspan="2" align="center"><strong>Total registros:</strong> {{cant}}</td></tr>
 </table>
 </div>
 <script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>
 <style type="text/css">
-#controles{height: 30px}
+#controles{height: 20px}
 #controles form{width: 25%;float: right;margin-right: 0px;}
 #controles form input{width: 70%;float: left; }
 table tr td p{height: 20px;width: 20px; text-align: center;color: white;margin-bottom: -10px;border-radius: 360px}

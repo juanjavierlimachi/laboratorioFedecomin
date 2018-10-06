@@ -34,9 +34,9 @@
 		</td>
 	</tr>
 	{% empty %}
-	<tr><td>No hay registros de este cliente</td></tr>
+	<tr><td colspan="11">No hay registros de este cliente</td></tr>
 {% endfor %}
-<tr><td colspan="11">Total registros: {{cant}}</td></tr>
+<tr><td colspan="11"><strong>Total registros:</strong> {{cant}}</td></tr>
 </table>
 </div>
 <script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>

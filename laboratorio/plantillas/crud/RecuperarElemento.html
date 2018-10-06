@@ -1,0 +1,19 @@
+<label>Esta Seguro de dar de alta el Elemento: <br>
+	<strong>{{dato.Nombre_del_Elemento|upper}} {{dato.Abreviatura}}</strong>
+</label>
+ <div class="modal-footer">
+    <button class="btn btn-danger" type="button" onclick="DelCliente();">Confirmar</button>
+  </div>
+  <script type="text/javascript">
+function DelCliente(){
+	$.ajax({
+		type:'GET',
+		url:'/recuperar_elemento/'+{{dato.id}}+'/',
+		success:function(resp){
+			$("#ventanas").html(resp);
+			VerElementos();
+		}
+	});
+}
+
+  </script>

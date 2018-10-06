@@ -7,7 +7,7 @@
 	<td>CI/NIT</td>
 	<td>Teléfono</td>
 	<td>Fecha Registro</td>
-	<td>Opciones</td>
+	<td>Editar</td>
 	<td>estado</td>
 </tr>
 {% for i in datos %}
@@ -23,7 +23,7 @@
 			<td>{{i.fecha_registro}}</td>
 			<td>
 				{% if user.is_active and user.is_superuser %}
-				<a href="/editCliente/{{i.id}}/"><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="/editCliente/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>
 				{% else %}
 					<span class="glyphicon glyphicon-info-sign"></span>
 				{% endif %}
@@ -36,7 +36,7 @@
 		</td>
 		</tr>
 {% endfor %}
-<tr> <td>Total Registros:{{cliente}}</td> </tr>
+<tr> <td colspan="2"><strong>Total Registros:</strong>{{cliente}}</td> </tr>
 </table>
 <ul class="pager">
 		{% if contenido.has_previous %}

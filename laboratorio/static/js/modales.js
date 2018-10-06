@@ -25,7 +25,7 @@ $("table tr td a").on("click",function(e){
 					show:"blind",
 					width: 600,
 					hide:"explode",
-					title:"Detalles.",
+					title:"LABORATORIO QUÍMICO FEDECOMIN",
 					position: "center"
 				});	
 		}

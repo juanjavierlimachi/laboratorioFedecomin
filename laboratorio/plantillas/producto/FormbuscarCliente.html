@@ -4,11 +4,9 @@
 <tr class="success">
 	<td>Ficha</td>
 	<td>Nombre</td>
-	<td>Apellidos(s)</td>
 	<td>CI/NIT</td>
 	<td>Teléfono</td>
 	<td>Fecha Registro</td>
-	<td>Opciones</td>
 	<td>estado</td>
 </tr>
 {% for i in resultados %}
@@ -18,20 +16,12 @@
 				<span class="glyphicon glyphicon-chevron-right"></span>
 			</a> 
 				{{i.Ficha}}</td>
-			<td>{{i.Nombre|upper}}</td>
-			<td>{{i.Apellidos|upper}}</td>
+			<td>{{i.Nombre|upper}}  {{i.Apellidos|upper}}</td>
 			<td>{{i.Ci_Nit}}</td>
 			<td>{{i.Celular}}</td>
 			<td>{{i.fecha_registro}}</td>
-			<td>
-				{% if user.is_active and user.is_superuser %}
-				<a href="/editTrabajador/{{i.id}}/"><span class="glyphicon glyphicon-pencil"></span></a>
-				<a href="/deleteTrabajador/{{i.id}}/" style="color:red;"><span class="glyphicon glyphicon-trash"></span></a>
-				{% else %}
-					<span class="glyphicon glyphicon-info-sign"></span>
-				{% endif %}
-			</td>
-			<td>{% if i.estado == 0 %}
+			
+			<td>{% if i.estado %}
 				<span><img src="/static/img/icon_success.gif"></span>
 			{% else %}
 				<span><img src="/static/img/icon_error.gif"></span>

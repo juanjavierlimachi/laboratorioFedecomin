@@ -234,7 +234,9 @@ def outProduct(request):
 		fe="%s-%s-%s" % (fecha.day,fecha.month,fecha.year)#fecha actual del sistema
 
 		inicio=datetime.strptime(request.POST['inicio'],"%d/%m/%Y")
+		print "inicio",inicio
 		final=datetime.strptime(request.POST['final'],"%d/%m/%Y")
+		print "final",final
 		if str(inicio) > str(final):
 			return HttpResponse("Error La Fecha Inicio No pueder ser Mayor a la Fecha Final.")
 		final = final + timedelta(days=1)
@@ -270,7 +272,7 @@ def outProduct(request):
 				't_productos':t_productos,
 				'total':total,
 				'inicio':inicio.date(),
-				'final':final.date()
+				'final':final.date() - timedelta(days=1)
 			}
 			return render_to_response('producto/outProduct.html',dat,context_instance=RequestContext(request))
 
@@ -318,7 +320,7 @@ def InprimirIngresoProductos(request, id,inicio, final):
 				't_productos':t_productos,
 				'total':total,
 				'inicio':inicio.date(),
-				'final':final.date(),
+				'final':final.date() - timedelta(days=1),
 				'fecha':fecha.date()
 			}
 			html=render_to_string('producto/InprimirIngresoProductos.html',dat,context_instance=RequestContext(request))
@@ -388,5 +390,55 @@ def Delete_resultado(request,id):
 	dato=Resultado.objects.get(id=int(id))
 	dato.delete()
 	return HttpResponse("La información se dió de baja correctamente.")
+
+def editElemento(request,id):
+	dato=Elemento.objects.get(id=int(id))
+	if request.method=='POST':
+		forms=FormElemento(request.POST,instance=dato)
+		if forms.is_valid():
+			forms.save()
+			return HttpResponse("La información se actualizó correctamente.")
+	else:
+		forms=FormElemento(instance=dato)
+	return render(request,'crud/editElemento.html',{'forms':forms,'ids':id})
+def deleteElemento(request,id):
+	dato=Elemento.objects.get(id=int(id))
+	return render(request,'crud/deleteElemento.html',{'dato':dato},context_instance=RequestContext(request))
+def Delete_elemento(request, id):
+	Elemento.objects.filter(id=int(id)).update(estado=False)
+	return HttpResponse("La información se dió de baja correctamente.")
+
+def RecuperarElemento(request, id):
+	dato=Elemento.objects.get(id=int(id))
+	return render(request,'crud/RecuperarElemento.html',{'dato':dato},context_instance=RequestContext(request))	
+def recuperar_elemento(request, id):
+	Elemento.objects.filter(id=int(id)).update(estado=True)
+	return HttpResponse("La información se dió de alta correctamente.")
+
+def ImprimirRecibo(request, id):
+	producto=Producto.objects.get(id=int(id))
+	fecha=datetime.now().date()
+	valores=['UNO','DOS','TRES','CUATRO','CINCO','SEIS','SIETE','OCHO','NUEVE','DIEZ','VEINTE', 'TRENTA','CUARENTA','CINCUENTA']
+	
+	dic={
+		'pagesize':'A4',
+		'producto':producto,
+		'fecha':fecha
+	}
+	html = render_to_string('crud/ImprimirRecibo.html',dic)	
+	return generar_pdf(html)
+def ImprimirDuplicado(request, id):
+	producto=Producto.objects.get(id=int(id))
+	resultados=Resultado.objects.filter(producto_id=int(id))
+	print resultados
+	fecha=datetime.now()
+	fe="%s-%s-%s" % (fecha.day,fecha.month,fecha.year)
+	dic={
+		'producto':producto,
+		'resultados':resultados,
+		'fe':fe
+	}
+	html=render_to_string('crud/ImprimirDuplicado.html',dic,context_instance=RequestContext(request))
+	return generar_pdf(html)
 
 

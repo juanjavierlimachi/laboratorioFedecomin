@@ -20,13 +20,13 @@
 		<td></td>
 		<td>{{i.Cliente.Nombre|upper}} {{i.Cliente.Apellidos|upper}}</td>
 		<td>{{i.Procedencia}}</td>
-		<td><a href="/ok/" id="{{i.id}}">{{i.Nro_de_Lote}}</a></td>
+		<td><a href="/ok/" id="/kardex/{{i.id}}/">{{i.Nro_de_Lote}}</a></td>
 		<td>{{i.Elemento.Abreviatura}}</td>
 		<td>{{i.Precio}}</td>
 		<td>{{i.Cantidad}}</td>
 		<td>{{i.Total}}</td>
 		<td>{{i.Observaciones|upper}}</td>
-		<td>{% if i.estado == 0 %}
+		<td>{% if i.estado %}
 				<span><img src="/static/img/icon_success.gif"></span>
 			{% else %}
 				<span><img src="/static/img/icon_error.gif"></span>

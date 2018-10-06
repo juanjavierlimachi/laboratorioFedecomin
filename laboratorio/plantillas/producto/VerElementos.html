@@ -5,7 +5,7 @@
 	<td>Nombre del Elemento</td>
 	<td>Abreviatura</td>
 	<td>Fecha Registro</td>
-	<td>Opciones</td>
+	<td>Editar</td>
 	<td>estado</td>
 </tr>
 {% for i in datos %}
@@ -15,16 +15,19 @@
 			<td>{{i.fecha_registro}}</td>
 			<td>
 				{% if user.is_active and user.is_superuser %}
-				<a href="/editTrabajador/{{i.id}}/"><span class="glyphicon glyphicon-pencil"></span></a>
-				<a href="/deleteTrabajador/{{i.id}}/" style="color:red;"><span class="glyphicon glyphicon-trash"></span></a>
+				<a href="/editElemento/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>
+				</span></a>
 				{% else %}
 					<span class="glyphicon glyphicon-info-sign"></span>
 				{% endif %}
 			</td>
 			<td>{% if i.estado %}
-				<span><img src="/static/img/icon_success.gif"></span>
+				<a href="/deleteElemento/{{i.id}}/" style="color:red;">
+					<span><img src="/static/img/icon_success.gif"></span></a>
 			{% else %}
-				<span><img src="/static/img/icon_error.gif"></span>
+				
+				<a href="/RecuperarElemento/{{i.id}}/" style="color:red;">
+					<span><img src="/static/img/icon_error.gif"></span></a>
 			{% endif %}
 		</td>
 		</tr>
