@@ -16,8 +16,8 @@
 </tr>
 {% for i in productos %}
 	<tr>
-		<td>{{i.Cliente.Ficha}}</td>
-		<td></td>
+		<td>{{i.Ficha}}</td>
+		<td>{{i.fecha_registro|date:"d"}}</td>
 		<td>{{i.Cliente.Nombre|upper}} {{i.Cliente.Apellidos|upper}}</td>
 		<td>{{i.Procedencia}}</td>
 		<td><a href="/ok/" id="/kardex/{{i.id}}/">{{i.Nro_de_Lote}}</a></td>

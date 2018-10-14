@@ -2,7 +2,7 @@
 <table class="table table-hover table-striped">
 	<tr><td colspan="7" align="center">LISTA DE CLIENTES REGISTRADOS</td></tr>
 <tr class="success">
-	<td>Ficha</td>
+	<td></td>
 	<td>Nombre completo</td>
 	<td>CI/NIT</td>
 	<td>Teléfono</td>
@@ -15,12 +15,11 @@
 			<td>
 			<a href="/ok/" id="/por_cliente/{{i.id}}/" title="Ir a detalles">
 				<span class="glyphicon glyphicon-chevron-right"></span>
-			</a> 
-				{{i.Ficha}}</td>
+			</a></td>
 			<td>{{i.Nombre|upper}} {{i.Apellidos|upper}}</td>
 			<td>{{i.Ci_Nit}}</td>
 			<td>{{i.Celular}}</td>
-			<td>{{i.fecha_registro}}</td>
+			<td>{{i.fecha_registro|date:"d-m-Y"}}</td>
 			<td>
 				{% if user.is_active and user.is_superuser %}
 				<a href="/editCliente/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>

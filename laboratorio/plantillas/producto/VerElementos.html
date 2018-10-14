@@ -12,7 +12,7 @@
 		<tr>
 			<td>{{i.Nombre_del_Elemento}}</td>
 			<td>{{i.Abreviatura}}</td>
-			<td>{{i.fecha_registro}}</td>
+			<td>{{i.fecha_registro|date:"d-m-Y"}}</td>
 			<td>
 				{% if user.is_active and user.is_superuser %}
 				<a href="/editElemento/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>

@@ -11,20 +11,23 @@ $('#Tipo').submit(function(e){
 				if(resp=='ok'){
 					$.ajax({
 						type:'GET',
-						url:'/kardex/'+{{id}},
+						url:'/kardex/'+{{id}}+'/',
 						beforeSend:Espera,
+						error:errores,
 						success:function(res){
-							$('#categorias').html(res);
+							$('#FormAjax').html(res);
 							$('#ventanas').html("Se registró el resultado correctamente.")
 						}
 					});
-					function Espera(){
-		        		$("#categorias").html('<img src="{{STATIC_URL}}img/loader.gif"></img>');
-		     		}
+					function errores(){
+			    		alert("Error: Por favor verifique que todos los datos estén correctamente ingresados.");
+					}
+				function Espera(){
+			       $("#ventanas").html('<img src="{{STATIC_URL}}img/loader.gif"></img>');
+			     }
 				}else{alert("Datos Incorrectos !!")}
 			}
 		});
-		
 	});
 </script>
 <div class="table-responsive">

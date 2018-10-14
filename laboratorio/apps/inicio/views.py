@@ -13,9 +13,6 @@ from django.views.generic import TemplateView, FormView,ListView,CreateView
 from django.core.urlresolvers import reverse_lazy
 import datetime
 # Create your views here
-
-
-
 def Usuario(request):
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/privado/')
@@ -83,9 +80,9 @@ class nuevoUser(FormView):
 		#usuario.groups.add(usuario)
 		return super(nuevoUser, self).form_valid(form)
 def Datos(request,id):
-	usuario=User.objects.filter(id=id)
+	usuario=User.objects.filter(id=id).order_by("-id")
 	print usuario
-	dato=Perfiles.objects.all()
+	dato=Perfiles.objects.all().order_by("-id")
 	return render_to_response('inicio/datos.html',{'usuario':usuario,'dato':dato},context_instance=RequestContext(request))
  
 @login_required(login_url='/')
@@ -190,7 +187,8 @@ def VolverHavilitar(request):
 def DatosUsuario(request):
 	users=User.objects.all().order_by("-id")
 	perfil=Perfiles.objects.all().order_by("-id")
-	return render_to_response("inicio/DatosUsuario.html",{'users':users,'perfil':perfil},context_instance=RequestContext(request))
+	t_user=Perfiles.objects.all().count()
+	return render_to_response("inicio/DatosUsuario.html",{'users':users,'perfil':perfil,'t_user':t_user},context_instance=RequestContext(request))
 
 def UsuarioVer(request, id):
 	user=User.objects.get(id=int(id))

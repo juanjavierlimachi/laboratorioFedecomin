@@ -23,7 +23,6 @@
 
 <tr class="success">
 	<td><br>Ficha</td>
-
 	<td><br>Nombre</td>
 	<td><br>Procedencia</td>
 	<td><br>Nro. de Lote</td>
@@ -35,7 +34,7 @@
 </tr>
 {% for i in productos %}
 	<tr>
-		<td><br>{{i.Cliente.Ficha}}</td>
+		<td><br>{{i.Ficha}}</td>
 		
 		<td><br>{{i.Cliente.Nombre|upper}} {{i.Cliente.Apellidos|upper}}</td>
 		<td><br>{{i.Procedencia}}</td>

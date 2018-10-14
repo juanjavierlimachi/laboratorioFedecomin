@@ -193,8 +193,8 @@ function borrado(){
 </tr>
 {% for i in productos %}
 	<tr>
-		<td>{{i.Cliente.Ficha}}</td>
-		<td></td>
+		<td>{{i.Ficha}}</td>
+		<td>{{i.fecha_registro|date:"d"}}</td>
 		<td>{{i.Cliente.Nombre|upper}} {{i.Cliente.Apellidos|upper}}</td>
 		<td>{{i.Procedencia}}</td>
 		<td><a href="/ok/" id="/kardex/{{i.id}}/">{{i.Nro_de_Lote}}</a></td>
@@ -212,7 +212,7 @@ function borrado(){
   {% empty %}
   <tr><td colspan="11" align="center"><strong>No hay registros para este mes</strong></td></tr>
 {% endfor %}
-<tr><td colspan="2" align="center"><strong>Total registros:</strong> {{cant}}</td></tr>
+<tr><td colspan="2"><strong>Total registros:</strong> {{cant}}</td></tr>
 </table>
 </div>
 <script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>

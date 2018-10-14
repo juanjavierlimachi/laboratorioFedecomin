@@ -7,6 +7,7 @@ $('#Tipo').submit(function(e){
 					type:'POST',
 					url:'/RegistroProductoView/'+{{ids}}+'/',
 					data: dato,
+					error:errores,
 					success:function(resp){
 						console.log(resp);
 						//$('#FormAjax').html(resp);
@@ -16,11 +17,14 @@ $('#Tipo').submit(function(e){
 							else{alert("El dato es Incorrecto.")}
 					}
 				});
+			function errores(){
+			    alert("Error: Por favor verifique que todos los datos estén correctamente ingresados.");
+			}
 	});
 
 </script>
 <div class="card">
-	<p id="texto">Registrar Producto</p>
+	<p id="texto">Registrar nuevo análisis</p>
 <form method='POST' id='Tipo'>{% csrf_token %}
 {{forms}}<br>
 <button class="btn btn-success">Registrar</button>

@@ -1,33 +1,42 @@
-<table class="table table-hover table-striped">
-	<tr class="success">
-		<td align="center" colspan="6"><br><br> <br> <strong>ANALISIS POR: </strong>  {{producto.Elemento.Nombre_del_Elemento|upper}}</td><td style="color:red" colspan="2"><br><br><br> Nro. CERT. {{producto.id}}</td><td></td>
+<table style="width: 100%;">
+	<tr class="success"><td></td><td></td>
+		<td align="center" colspan="9" style="width: 400px;"><br><br> <br><br>
+			<strong>ANALISIS POR: </strong>  {{producto.Elemento.Nombre_del_Elemento|upper}}
+		</td>
+			<td style="color:red" colspan="3" align="center"><br><br><br><br>
+				Nro. CERT. {{producto.id}}
+			</td><td></td>
 	</tr>
-	<tr>
-		<td colspan="6"><br><br> <strong>PERTENECIENTE A:</strong> {{producto.Cliente.Nombre|upper}} {{producto.Cliente.Apellidos|upper}}</td>
+	<tr><td></td>
+		<td colspan="12"> <strong>PERTENECIENTE A:</strong> {{producto.Cliente.Nombre|upper}} {{producto.Cliente.Apellidos|upper}}</td>
 		
-
 	</tr>
-	<tr><td colspan="8"><br> <strong>LOTE NRO. </strong> {{producto.Nro_de_Lote|upper}}</td></tr>
-	<tr>
-		<td colspan="5"><br><strong>PROCEDENCIA:</strong> {{producto.Procedencia|upper}}</td>
-		<td colspan="4"><br><strong>OBS. :</strong> {{producto.Observaciones}}</td>
+	<tr><td></td>
+		<td colspan="8"> <strong>LOTE NRO. </strong> {{producto.Nro_de_Lote|upper}}</td>
 	</tr>
-	<tr>
-	
+	<tr><td></td>
+		<td colspan="8"><strong>PROCEDENCIA:</strong> {{producto.Procedencia|upper}}</td>
+		<td colspan="7"><strong>OBS. :</strong> {{producto.Observaciones}}</td>
 	</tr>
-
 		<tr>
-			<td align="center" colspan="8"><br> <br><br><strong>
-				{% for i in resultados %}
-						{{i.Elemento|upper}}	 {{i.Resultado}}  % {{i.Abreviatura}} <br> <br>
+		{% for i in resultados %}
+			{% if i.Abreviatura == "Ag" %}
+				<td align="center" colspan="15"><br><br><br><br><br><br><strong>
+						{{i.Elemento|upper}}	 {{i.Resultado}}  DM {{i.Abreviatura}}
+					{% else %}
+						{{i.Elemento|upper}}	 {{i.Resultado}}  % {{i.Abreviatura}}
+				</td>
+			{% endif %} 
+					<br><br><br>
 				{% empty %}
-					<strong>Sin resultados</strong>
-				{% endfor %}</strong> 
-			</td>
+				<strong>Sin resultados</strong>
+			{% endfor %}</strong> 
 		</tr>
-
-<tr><td></td><td><br><br></td><td>{{fe}}</td></tr>
-</table>
-<style type="text/css">
-table{font-size: x-large}
+</table><br><br><br>
+<div id="laf"><br><br><br>
+<p style="margin-left: 150px; margin-bottom: 0px;font-size: 16px;"><strong><br>{{fe}}</strong></p>
+</div>
+<style type="text/css" media="print">
+#laf{height: 150px; margin-bottom: -50px;}
+table{font-size: x-large; width: 100%;margin-left: 25px;}
 </style>

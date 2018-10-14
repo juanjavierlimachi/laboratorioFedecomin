@@ -36,7 +36,7 @@ function errores(){
 	<p id="texto">Buscar cliente ó empresa</p>
 <form method='POST' id='Tipo' class="sidebar-form">{% csrf_token %}
         <div class="input-group">
-          <input type="text" name="cliente" id="cliente_id" class="form-control" title="Buscar por nombre, Apellido, Nro. de Carnet" placeholder="Buscar cliente, por nombre, Apellido, Nro. de Carnet" required>
+          <input type="text" name="cliente" id="cliente_id" class="form-control" placeholder="Buscar cliente, por nombre, Apellido, Nro. de Carnet" required>
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>

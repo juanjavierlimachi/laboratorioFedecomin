@@ -21,18 +21,17 @@ def BuscarCliente(request):
 
 def RegistroProductoView(request,id):
 	#Usuario=Producto(Usuario=request.user)
-
 	if request.method=='POST':
 		#cliente=Cliente(Cliente=int(id))
 		producto=Producto()
 		producto.Nro_de_Lote=request.POST['Nro_de_Lote'].upper()
 		producto.Precio=float(request.POST['Precio'])
-		
 		producto.Total=float(request.POST['Cantidad'])*float(request.POST['Precio'])
 		producto.Observaciones=request.POST['Observaciones']
 		producto.Cliente_id=int(id)
 		producto.Elemento_id=int(request.POST['Elemento'])
 		producto.Procedencia=request.POST['Procedencia'].upper()
+		producto.Ficha=request.POST['Ficha']
 		producto.Usuario_id=int(request.user.id)
 		producto.save()
 		return HttpResponse("ok")
@@ -180,7 +179,7 @@ def ImprimirCertificado(request,id):
 	resultados=Resultado.objects.filter(producto_id=int(id))
 	print resultados
 	fecha=datetime.now()
-	fe="%s-%s-%s" % (fecha.day,fecha.month,fecha.year)
+	fe="%s/%s/%s" % (fecha.day,fecha.month,fecha.year)
 	dic={
 		'producto':producto,
 		'resultados':resultados,
@@ -188,6 +187,7 @@ def ImprimirCertificado(request,id):
 	}
 	html=render_to_string('producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
 	return generar_pdf(html)
+	#return render(request,'producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
 
 def buscar(request):
     if request.method=="POST":
@@ -257,7 +257,7 @@ def outProduct(request):
 				'total':total,
 				'client':client,
 				'inicio':inicio.date(),
-				'final':final.date()
+				'final':final.date() - timedelta(days=1)
 			}
 			return render_to_response('producto/outProduct.html',dat,context_instance=RequestContext(request))
 		else:
@@ -302,7 +302,7 @@ def InprimirIngresoProductos(request, id,inicio, final):
 				'total':total,
 				'client':client,
 				'inicio':inicio.date(),
-				'final':final.date(),
+				'final':final.date() - timedelta(days=1),
 				'fecha':fecha.date()
 			}
 			html=render_to_string('producto/InprimirIngresoProductos.html',dat,context_instance=RequestContext(request))

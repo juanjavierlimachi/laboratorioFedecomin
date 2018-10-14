@@ -7,13 +7,16 @@ $('#Tipo').submit(function(e){
 			type:'POST',
 			url:'/NewElemento/',
 			data: dato,
+			error:errores,
 			success:function(resp){			
 				if(resp=='ok'){
 					VerElementos();
-				}else{alert("Datos Incorrectos !!")}
+				}else{alert("Error: Por favor  complete todos los campos correctamente.")}
 			}
 		});
-		
+		function errores(){
+			    alert("Error: Por favor  complete todos los campos correctamente.");
+			}
 	});
 </script>
 <div class="table-responsive">
