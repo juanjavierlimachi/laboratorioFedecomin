@@ -1,9 +1,9 @@
 <table>
 	<tr class="success"><td></td><td></td>
-		<td align="center" colspan="9"><br><br> <br> <br><strong>ANALISIS POR: </strong>  {{producto.Elemento.Nombre_del_Elemento|upper}}</td><td style="color:red" colspan="3" align="center"><br><br><br><br> Nro. CERT. {{producto.id}}</td><td></td>
+		<td align="center" colspan="9"><br><br> <br><strong>ANALISIS POR: </strong>  {{producto.Elemento.Nombre_del_Elemento|upper}}</td><td style="color:red" colspan="3" align="center"><br><br><br> Nro. CERT. {{producto.id}}</td><td></td>
 	</tr>
 	<tr><td></td>
-		<td colspan="10"><br> <strong>PERTENECIENTE A:</strong> {{producto.Cliente.Nombre|upper}} {{producto.Cliente.Apellidos|upper}}</td>
+		<td colspan="10"><strong>PERTENECIENTE A:</strong> {{producto.Cliente.Nombre|upper}} {{producto.Cliente.Apellidos|upper}}</td>
 		
 	</tr>
 	<tr><td></td>
@@ -27,8 +27,8 @@
 				{% endfor %}</strong> 
 			</td>
 		</tr>
-</table>
-<p style="margin-left: 150px; margin-bottom: 0px;"><strong>{{fe}}     </strong>   <strong>  DUPLICADO</strong></p>
+</table><br><br><br>
+<p style="margin-left: 150px; margin-bottom: 0px;font-size: 16px;"><strong><br><br>{{fe}}     </strong>   <strong style="color:red">  DUPLICADO</strong></p>
 <style type="text/css" media="print">
-table{font-size: x-large; width: 100%;margin-left: 30px;}
+table{font-size: x-large; width: 100%;margin-left: 25px;}
 </style>
