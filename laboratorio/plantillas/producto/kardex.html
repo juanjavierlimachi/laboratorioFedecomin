@@ -36,11 +36,14 @@
 				{% else %}
 				{{i.Elemento|upper}}	 {{i.Resultado}}  % {{i.Abreviatura}}
 			{% endif %}
-<a href="/editResultado/{{i.id}}/" title="Editar resultado" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> </a>
+	<a href="/editResultado/{{i.id}}/" title="Editar resultado" type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-pencil"></span>
+	</a>
 						
-	<a href="/deleteResultado/{{i.id}}/" title="Dar Baja este resultado" type="button" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span>
-			</a>
-		</td><br> <br>
+	<a href="/deleteResultado/{{i.id}}/" title="Dar Baja este resultado" type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-trash"></span>
+	</a>
+		</td>
 		</strong> 
 			</td>
 		</tr>

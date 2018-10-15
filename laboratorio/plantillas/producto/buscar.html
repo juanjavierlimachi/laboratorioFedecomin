@@ -16,11 +16,7 @@
 {% for i in resultados %}
 <li class="aa">
 	<a href="/RegistroProductoView/{{i.id}}/">
-	<strong>{{i.Nombre|upper}} {{i.Apellidos|upper}}   - Nro. de Carnet:  {{i.Ci_Nit}}   - Celular:   {{i.Celular}} {% if i.estado %}
-				<span><img src="/static/img/icon_success.gif"></span>
-			{% else %}
-				<span><img src="/static/img/icon_error.gif"></span>
-			{% endif %}
+	<strong>{{i.Nombre|upper}} {{i.Apellidos|upper}}   - Nro. de Carnet:  {{i.Ci_Nit}}   - Celular:   {{i.Celular}}
 			</strong>
 	</a>
 </li>

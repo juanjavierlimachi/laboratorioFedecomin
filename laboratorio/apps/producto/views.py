@@ -200,8 +200,8 @@ def buscar(request):
             Q(Ci_Nit__icontains=texto)
         )
         resultados=Cliente.objects.filter(busqueda).distinct()
-        print "Clente:",resultados
-        return render_to_response('producto/FormbuscarCliente.html',{'resultados':resultados},context_instance=RequestContext(request))
+        cliente=Cliente.objects.filter(busqueda).count()
+        return render_to_response('producto/FormbuscarCliente.html',{'resultados':resultados,'cliente':cliente},context_instance=RequestContext(request))
 
     else:
         texto=request.GET["q"]
@@ -211,7 +211,8 @@ def buscar(request):
             Q(Ci_Nit__icontains=texto)
         )
         resultados=Cliente.objects.filter(busqueda).distinct()
-        return render_to_response('producto/FormbuscarCliente.html',{'resultados':resultados},context_instance=RequestContext(request))
+        cliente=Cliente.objects.filter(busqueda).count()
+        return render_to_response('producto/FormbuscarCliente.html',{'resultados':resultados,'cliente':cliente},context_instance=RequestContext(request))
 
 def CrearReportes(request):
 	fecha=datetime.now()
