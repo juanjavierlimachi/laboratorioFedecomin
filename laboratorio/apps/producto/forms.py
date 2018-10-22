@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import User
 from .models import *
 
-observaciones = (('PAQUETE CERRADO', 'PAQUETE CERRADO',), ('PAQUETE CERRADO Y SELLADO', 'PAQUETE CERRADO Y SELLADO',),('PAQUETE ABIERTO', 'PAQUETE ABIERTO',))
+observaciones = (('PAQUETE CERRADO', 'PAQUETE CERRADO',), ('PAQUETE CERRADO Y SELLADO', 'PAQUETE CERRADO Y SELLADO',),('PAQUETE ABIERTO', 'PAQUETE ABIERTO',),('PAQUETE PERSONAL', 'PAQUETE PERSONAL',),('PAQUETE CORTADO', 'PAQUETE CORTADO',),('PAQUETE CONTAMINADO', 'PAQUETE CONTAMINADO',),('OTROS', 'OTROS',))
 class FormProducto(ModelForm):
 	Observaciones=forms.ChoiceField(widget=forms.Select, choices=observaciones)
 	class Meta():

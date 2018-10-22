@@ -18,20 +18,20 @@
 			<td align="center" colspan="15">
 				<!--  forloop.counter == 1  -->
 				<strong>
-					<br><br><br><br><br><br><br>
+					<br><br><br><br><br>
 						{% if i.Abreviatura == "Ag" %}
 							{{i.Elemento|upper}}	 {{i.Resultado}}  DM {{i.Abreviatura}}
 						{% else %}
 							{{i.Elemento|upper}}	 {{i.Resultado}}  % {{i.Abreviatura}}
 						{% endif %}
-					<br><br><br><br>
+					
 				</strong> 
 			</td>
 		</tr>
 		{% empty %}
 			<tr><td colspan="15" align="center"><strong><br><br><br>Sin resultados</strong></td></tr>
 		{% endfor %}</strong> 
-</table><br><br><br><br><br>
+</table><br><br><br><br>
 <p style="margin-left: 120px; margin-bottom: 0px; font-size: 14px;">
 	<strong><br><br>{{fe}}     </strong>
 	{% if muestra == 0 %}

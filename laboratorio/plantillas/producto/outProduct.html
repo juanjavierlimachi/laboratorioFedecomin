@@ -39,7 +39,6 @@ $("table tr td a").on("click",function(e){
 	<td>Precio</td>
 	<td>Cantidad</td>
 	<td>Total</td>
-	<td>Observaciones</td>
 	<td>estado</td>
 </tr>
 {% for i in productos %}
@@ -53,7 +52,6 @@ $("table tr td a").on("click",function(e){
 		<td>{{i.Precio}}</td>
 		<td>{{i.Cantidad}}</td>
 		<td>{{i.Total}}</td>
-		<td>{{i.Observaciones|upper}}</td>
 		<td>{% if i.estado %}
 				<span><img src="/static/img/icon_success.gif"></span>
 			{% else %}
@@ -64,6 +62,9 @@ $("table tr td a").on("click",function(e){
 	{% empty %}
 	<tr><td colspan="11" align="center">No hay registros, o el producto esta en baja</td></tr>
 {% endfor %}
-<tr><td colspan="2"><strong>Total registros: </strong> {{t_productos}}</td></tr>
+<tr><td colspan="2"><strong>Total registros: </strong> {{t_productos}}</td>
+	
+  <td></td><td></td><td></td><td></td><td></td><td colspan="2"><strong>Total Ingreso: </strong> {{total_ingresos}}</td>
+</tr>
 </table>
 </div>

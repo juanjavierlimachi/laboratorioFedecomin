@@ -59,7 +59,9 @@
   {% empty %}
   <tr><td colspan="11" align="center"><strong>No hay registros para este mes</strong></td></tr>
 {% endfor %}
-<tr><td colspan="2"><strong>Total registros: </strong>{{cant}}</td></tr>
+<tr><td colspan="2"><strong>Total registros: </strong>{{cant}}</td>
+  <td></td><td></td><td></td><td></td><td></td><td colspan="2"><strong>Total Ingreso: </strong> {{total_ingresos}}</td>
+</tr>
 </table>
 </div>
 <script type="text/javascript">
@@ -118,7 +120,7 @@ function InprimirIngreso(){
   var fin = $("#fin").val();
   var user = $("#user").val();
   if(inicio=='' || fin =='' || user == '' || !isNaN(inicio) || !isNaN(fin) ){
-    alert("Por favor Ingreso la fecha correctamente.");
+    alert("Por favor Ingrese la fecha correctamente.");
     $("#ini").focus();
     return false
   }

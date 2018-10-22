@@ -14,9 +14,9 @@
 	</tr>
 
 	<tr>
-		<td colspan="2"><br><strong>ElEMENTO:</strong> {{producto.Elemento.Abreviatura}}</td>
+		<td colspan="2"><br><strong>ELEMENTO:</strong> {{producto.Elemento.Abreviatura}}</td>
 		<td colspan="2"><br><strong>Nro. de Lote:</strong> {{producto.Nro_de_Lote}}</td>
-		<td colspan="4"><br><strong>Fecha de Registro:</strong> {{producto.fecha_registro|date:" d-m-Y"}}</td>
+		<td colspan="4"><br><strong>Fecha de Registro:</strong> {{horasR}}</td>
 		<td colspan="2"><br><strong>Estado: </strong> {% if producto.estado %}
 				<img src="{{STATIC_URL}}img/icon_success.gif" title="Activo">
 			{% else %}
@@ -81,9 +81,10 @@
 	</tr>
 </table>
 <a href="/ImprimirRecibo/{{producto.id}}/" target="_blank" type="button" class="btn btn-default">Imprimir recibo</a>
-<a href="/ImprimirCertificado/{{producto.id}}/" target="_blank" type="button" class="btn btn-default">Imprimir Certificado</a>
-<a href="/ImprimirDuplicado/{{producto.id}}/" target="_blank" type="button" class="btn btn-default">Imprimir Duplicado</a>
+<a href="/ImprimirCertificado/{{producto.id}}/1/" target="_blank" type="button" class="btn btn-default">Imprimir Certificado</a>
+<a href="/ImprimirCertificado/{{producto.id}}/0/" target="_blank" type="button" class="btn btn-default">Imprimir Duplicado</a>
 </div>
+
 <style type="text/css">
 table tr td{text-align: center;}
 table tr td #ar{

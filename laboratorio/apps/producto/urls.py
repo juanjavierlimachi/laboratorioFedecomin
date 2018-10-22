@@ -18,8 +18,6 @@ urlpatterns = patterns('',
     url(r'^por_cliente/(?P<id>\d+)/$',por_cliente),
     url(r'^buscarProducto_view/$', buscarProducto_view),
     url(r'^AgregarResultado/(?P<id>\d+)/$',AgregarResultado),
-    
-    url(r'^ImprimirCertificado/(?P<id>\d+)/$',ImprimirCertificado),
     url(r'^buscar/$',buscar),
     url(r'^crearReportes/$',CrearReportes),
     url(r'^outProduct/$',outProduct),
@@ -47,5 +45,6 @@ urlpatterns = patterns('',
     
     url(r'^recuperar_elemento/(?P<id>\d+)/$',recuperar_elemento),
     url(r'^ImprimirRecibo/(?P<id>\d+)/$',ImprimirRecibo),
+    url(r'^ImprimirCertificado/(?P<id>\d+)/(?P<copia>[^/]+)/$',ImprimirCertificado),
     url(r'^ImprimirDuplicado/(?P<id>\d+)/$',ImprimirDuplicado),
 )

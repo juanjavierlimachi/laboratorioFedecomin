@@ -9,11 +9,11 @@
 	caption-side: bottom;
 	height: 100px;
 }
-
 </style>
+<meta charset="utf-8">
 <div class="table-responsive">
 <table class="table table-hover table-striped" border='1'>
-	<tr><td colspan="9" align="center"><br>
+	<tr><td colspan="8" align="center"><br>
 		{% if client.Nombre %}
 			<strong>PRODUCTOS INGRESADOS POR EL CLIENTE:</strong> {{cliente.Nombre|upper}} {{cliente.Apellidos|upper}} <strong>CI:</strong> {{cliente.Ci_Nit}} <strong>CEL.</strong> :{{cliente.Celular}} <br><strong>DESDE:</strong> {{inicio}} <strong>HASTA</strong> {{final}}
 		{% else %}
@@ -22,33 +22,32 @@
 	</td></tr>
 
 <tr class="success">
-	<td><br>Ficha</td>
+	<td WIDTH="35" ><br>Fecha</td>
 	<td><br>Nombre</td>
 	<td><br>Procedencia</td>
-	<td><br>Nro. de Lote</td>
-	<td><br>Elemento</td>
-	<td><br>Precio</td>
-	<td><br>Cantidad</td>
-	<td><br>Total</td>
-	<td><br>Observaciones</td>
+	<td WIDTH="70"><br>Nro. de Lote</td>
+	<td WIDTH="55"><br>Elemento</td>
+	<td WIDTH="40"><br>Precio</td>
+	<td WIDTH="50"><br>Cantidad</td>
+	<td WIDTH="40"><br>Total</td>
 </tr>
 {% for i in productos %}
 	<tr>
-		<td><br>{{i.Ficha}}</td>
-		
+		<td><br>{{i.fecha_registro|date:"d"}}</td>
 		<td><br>{{i.Cliente.Nombre|upper}} {{i.Cliente.Apellidos|upper}}</td>
 		<td><br>{{i.Procedencia}}</td>
 		<td><br>{{i.Nro_de_Lote}}</td>
 		<td><br>{{i.Elemento.Abreviatura}}</td>
 		<td><br>{{i.Precio}}</td>
 		<td><br>{{i.Cantidad}}</td>
-		<td><br>{{i.Total}}</td>
-		<td><br>{{i.Observaciones|upper}}</td>
+		<td size="15px"><br>{{i.Total}}</td>
 	</tr>
 	{% empty %}
-	<tr><td colspan="9" align="center"><br>No hay registros, o el producto esta en baja</td></tr>
+	<tr><td colspan="8" align="center"><br>No hay registros, o el producto esta en baja</td></tr>
 {% endfor %}
-<tr><td colspan="5"><br>Fecha de reporte: {{fecha}}</td>
-<td colspan="4"><br>Registros:{{t_productos}}</td></tr>
+<tr><td colspan="2"><br>Fecha de reporte: {{fecha}}</td>
+	<td><br>Total registros:{{t_productos}}</td>
+	<td colspan="5"><br>Total ingreso: {{total_ingresos}}</td>
+</tr>
 </table>
 </div>

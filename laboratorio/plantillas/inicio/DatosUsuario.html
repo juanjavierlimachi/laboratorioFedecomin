@@ -6,7 +6,6 @@
 			<td>Nombre</td>
 			<td>Apellido(s)</td>
 			<td>Nro. CI.</td>
-			<td>Celular</td>
 			<td>Fecha registro</td>
 			<td>Asignación</td>
 			<td>Estado</td>
@@ -16,10 +15,9 @@
 			{% if j.id == i.usuario_id %}
 <tr>
 	<td>{{j.username}}</td>
-	<td>{{j.first_name}}</td>
-	<td>{{j.last_name}}</td>
+	<td>{{j.first_name|upper}}</td>
+	<td>{{j.last_name|upper}}</td>
 	<td>{{i.ci}}</td>
-	<td>{{i.telefono}}</td>
 	<td>{{j.date_joined}}</td>
 	<td>{% if j.is_superuser %}
 			Administrador

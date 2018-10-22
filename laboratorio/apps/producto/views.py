@@ -14,6 +14,7 @@ from datetime import datetime, date, time, timedelta
 import StringIO
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
+from django.db.models import Sum
 # Create your views here.
 def BuscarCliente(request):
 
@@ -76,11 +77,13 @@ def BuscarCliente_view(request):
 
 def kardex(request, id):
 	producto=Producto.objects.get(id=int(id))
+	horasR = producto.fecha_registro - timedelta(hours=4)
+	print "nueva hora",horasR 
 	resultados=Resultado.objects.filter(producto_id=int(id))
-	print resultados
 	dic={
 		'producto':producto,
-		'resultados':resultados
+		'resultados':resultados,
+		'horasR':horasR
 	}
 	return render(request,'producto/kardex.html',dic)
 def NewClient(request):
@@ -140,7 +143,7 @@ def buscarProducto_view(request):
 		texto = request.POST['p']
 		busqueda=(
 				Q(Nro_de_Lote__icontains=texto) |
-				Q(id__icontains=texto) |
+				Q(Ficha__icontains=texto) |
 				Q(id__icontains=texto)
 			)
 		productos=Producto.objects.filter(busqueda).distinct()
@@ -150,7 +153,7 @@ def buscarProducto_view(request):
 		print texto
 		busqueda=(
 				Q(Nro_de_Lote__icontains=texto) |
-				Q(id__icontains=texto) |
+				Q(Ficha__icontains=texto) |
 				Q(id__icontains=texto)
 			)
 		productos=Producto.objects.filter(busqueda).distinct()
@@ -174,20 +177,6 @@ def generar_pdf(html):
 	if not pdf.err:
 		return HttpResponse(resultado.getvalue(),'application/pdf')
 	return HttpResponse("Error al generar el reporte")
-def ImprimirCertificado(request,id):
-	producto=Producto.objects.get(id=int(id))
-	resultados=Resultado.objects.filter(producto_id=int(id))
-	print resultados
-	fecha=datetime.now()
-	fe="%s/%s/%s" % (fecha.day,fecha.month,fecha.year)
-	dic={
-		'producto':producto,
-		'resultados':resultados,
-		'fe':fe
-	}
-	html=render_to_string('producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
-	return generar_pdf(html)
-	#return render(request,'producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
 
 def buscar(request):
     if request.method=="POST":
@@ -217,15 +206,17 @@ def buscar(request):
 def CrearReportes(request):
 	fecha=datetime.now()
 	final="%s-%s-%s" % (fecha.year,fecha.month,fecha.day)#fecha actual del sistema
-	print "la fecha",fecha
 	inicio="%s-%s-01" % (fecha.year,fecha.month)
 	productos=Producto.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).order_by("-id")
 	clientes=Cliente.objects.filter(estado=True).order_by("-id")
 	cant=Producto.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).count()
+	obj = Producto.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).aggregate(Sum('Total'))
+	total_ingresos = obj["Total__sum"]
 	dic={
 		'productos':productos,
 		'clientes':clientes,
-		'cant':cant
+		'cant':cant,
+		'total_ingresos':total_ingresos
 		}
 	return render(request,"producto/CrearReportes.html",dic)
 
@@ -247,15 +238,14 @@ def outProduct(request):
 			t_productos=Producto.objects.filter(Cliente_id=user,fecha_registro__range=(inicio,final),estado=True).count()
 			productos=Producto.objects.filter(Cliente_id=user,fecha_registro__range=(inicio,final),estado=True)
 			cliente = Cliente.objects.get(id=user)
-			total = 0
 			client = Cliente.objects.get(id=user)
-			for i in productos:
-				total = total + i.Total
+			obj = Producto.objects.filter(Cliente_id=user,fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Total'))
+			total_ingresos = obj["Total__sum"]
 			dat={
+				'total_ingresos':total_ingresos,
 				'productos':productos,
 				't_productos':t_productos,
 				'cliente':cliente,
-				'total':total,
 				'client':client,
 				'inicio':inicio.date(),
 				'final':final.date() - timedelta(days=1)
@@ -264,14 +254,12 @@ def outProduct(request):
 		else:
 			t_productos=Producto.objects.filter(fecha_registro__range=(inicio,final),estado=True).count()
 			productos=Producto.objects.filter(fecha_registro__range=(inicio,final),estado=True)
-
-			total = 0
-			for i in productos:
-				total = total + i.Total
+			obj = Producto.objects.filter(fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Total'))
+			total_ingresos = obj["Total__sum"]
 			dat={
+				'total_ingresos':total_ingresos,
 				'productos':productos,
 				't_productos':t_productos,
-				'total':total,
 				'inicio':inicio.date(),
 				'final':final.date() - timedelta(days=1)
 			}
@@ -291,38 +279,35 @@ def InprimirIngresoProductos(request, id,inicio, final):
 			t_productos=Producto.objects.filter(Cliente_id=id,fecha_registro__range=(inicio,final),estado=True).count()
 			productos=Producto.objects.filter(Cliente_id=id,fecha_registro__range=(inicio,final),estado=True)
 			cliente = Cliente.objects.get(id=id)
-			total = 0
 			client = Cliente.objects.get(id=id)
-			for i in productos:
-				total = total + i.Total
+			obj = Producto.objects.filter(Cliente_id=id,fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Total'))
+			total_ingresos = obj["Total__sum"]
 			dat={
 				'pagesize':'A4',
 				'productos':productos,
 				't_productos':t_productos,
 				'cliente':cliente,
-				'total':total,
 				'client':client,
 				'inicio':inicio.date(),
 				'final':final.date() - timedelta(days=1),
-				'fecha':fecha.date()
+				'fecha':fecha.date(),
+				'total_ingresos':total_ingresos
 			}
 			html=render_to_string('producto/InprimirIngresoProductos.html',dat,context_instance=RequestContext(request))
 			return generar_pdf(html)
 		else:
 			t_productos=Producto.objects.filter(fecha_registro__range=(inicio,final),estado=True).count()
 			productos=Producto.objects.filter(fecha_registro__range=(inicio,final),estado=True)
-
-			total = 0
-			for i in productos:
-				total = total + i.Total
+			obj = Producto.objects.filter(fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Total'))
+			total_ingresos = obj["Total__sum"]
 			dat={
 				'pagesize':'A4',
 				'productos':productos,
 				't_productos':t_productos,
-				'total':total,
 				'inicio':inicio.date(),
 				'final':final.date() - timedelta(days=1),
-				'fecha':fecha.date()
+				'fecha':fecha.date(),
+				'total_ingresos':total_ingresos
 			}
 			html=render_to_string('producto/InprimirIngresoProductos.html',dat,context_instance=RequestContext(request))
 			return generar_pdf(html)
@@ -428,6 +413,62 @@ def ImprimirRecibo(request, id):
 	}
 	html = render_to_string('crud/ImprimirRecibo.html',dic)	
 	return generar_pdf(html)
+def ImprimirCertificado(request,id,copia):
+	muestra=int(copia)
+	producto=Producto.objects.get(id=int(id))
+	resultados=Resultado.objects.filter(producto_id=int(id))
+	contador=0
+	for i in resultados:
+		contador = contador + 1
+	print "Total de resultados::: ",contador##cuento cuantos resultados tiene el sobre
+	if contador == 1:
+		fecha=datetime.now()
+		fe="%s/%s/%s" % (fecha.day,fecha.month,fecha.year)
+		dic={
+			'producto':producto,
+			'resultados':resultados,
+			'fe':fe,
+			'muestra':muestra
+		}
+		html=render_to_string('producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
+		return generar_pdf(html)
+	else:
+		if contador == 2:
+			fecha=datetime.now()
+			fe="%s/%s/%s" % (fecha.day,fecha.month,fecha.year)
+			dic={
+				'producto':producto,
+				'resultados':resultados,
+				'fe':fe,
+				'muestra':muestra
+			}
+			html=render_to_string('producto/ImprimirCertificado2.html',dic,context_instance=RequestContext(request))
+			return generar_pdf(html)
+		else:
+			if contador == 3:
+				fecha=datetime.now()
+				fe="%s/%s/%s" % (fecha.day,fecha.month,fecha.year)
+				dic={
+					'producto':producto,
+					'resultados':resultados,
+					'fe':fe,
+					'muestra':muestra
+				}
+				html=render_to_string('producto/ImprimirCertificado3.html',dic,context_instance=RequestContext(request))
+				return generar_pdf(html)
+			else:
+				fecha=datetime.now()
+				fe="%s/%s/%s" % (fecha.day,fecha.month,fecha.year)
+				dic={
+					'producto':producto,
+					'resultados':resultados,
+					'fe':fe,
+					'muestra':muestra
+				}
+				html=render_to_string('producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
+				return generar_pdf(html)
+
+	#return render(request,'producto/ImprimirCertificado.html',dic,context_instance=RequestContext(request))
 def ImprimirDuplicado(request, id):
 	producto=Producto.objects.get(id=int(id))
 	resultados=Resultado.objects.filter(producto_id=int(id))
