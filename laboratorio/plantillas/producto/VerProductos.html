@@ -159,7 +159,7 @@ function borrado(){
 <div class="table-responsive">
 <div id="controles">
 <select id="cate">
-                <option>FILTRAR POR CLIENTE</option>
+                <option><strong>FILTRAR POR CLIENTE</strong></option>
                 {% for i in clientes %}
                     <option value='{{i.id}}'>{{i.Nombre|upper}} {{i.Apellidos|upper}}</option>
                 {% endfor %}
@@ -167,7 +167,6 @@ function borrado(){
 <div class="btn-group">
 
 <button type="button" onclick="update_pro();" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
-
 </div>
  <form method="POST" id="Busqueda">{% csrf_token %}
     <input type="text" name="p" id="Pro" placeholder="Buscar Producto" class="form-control" title="Busque un producto, por Nro. de lote ó ficha " required/>
