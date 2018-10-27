@@ -1,0 +1,30 @@
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/registroSalidas/',
+			data: dato,
+			success:function(resp){			
+				if(resp=='ok'){
+					VerSalidas();
+				}else{alert("Error: Por favor  complete todos los campos correctamente.")}
+			}
+		});
+		
+	});
+</script>
+<style type="text/css">
+#id_Detalle{height: 100px;margin-left: 15px;}
+</style>
+<div class="table-responsive">
+<div class="card">
+	<p id="texto">Registrar salida de efectivo</p>
+<form method="POST" id="Tipo">{% csrf_token %}
+	{{forms}}<br>
+	<button class="btn btn-success">Registrar</button>
+</form>
+</div>
+</div>

@@ -1,0 +1,48 @@
+<style type="text/css">
+.table-responsive table{
+	width: 100%; text-align: center; border-top-style: 20px;
+}
+.table-responsive table tr td{
+	vertical-align: top;
+	border: 1px solid #000;
+	
+	caption-side: bottom;
+	height: 100px;
+}
+</style>
+<meta charset="utf-8">
+<div class="table-responsive">
+<table class="table table-hover table-striped" border='1'>
+	<tr><td colspan="5" align="center"><br>
+		{% if client.get_full_name %}
+			<strong>SALIDAS DE EFECTIVO DEL USUARIO:</strong> {{cliente.get_full_name|upper}} <br><strong>DESDE:</strong> {{inicio}} <strong>HASTA</strong> {{final}}
+		{% else %}
+			<strong>REPORTE GENERAL DESDE:</strong> {{inicio}} <strong>HASTA</strong> {{final}}
+		{% endif %}
+	</td></tr>
+<tr class="success">
+	<td WIDTH="90"><br>Fecha de registro</td>
+	<td><br>Detalle</td>
+	<td WIDTH="50"><br>Monto</td>
+	<td><br>Registrado Por:</td>
+	<td><br>Observaciones</td>
+</tr>
+{% for i in productos %}
+	<tr>
+	  <td><br>{{i.fecha_registro|date:"d-m-Y"}}</td>
+      <td><br>{{i.Detalle}}</td>
+      <td><br>{{i.Monto}}</td>
+      <td><br>{{i.Usuario.get_full_name|upper}}</td>
+      <td><br>{{i.Observaciones}}</td>
+	</tr>
+	{% empty %}
+	<tr><td colspan="5" align="center"><br>No hay registros de salida, o esta en baja</td></tr>
+{% endfor %}
+<tr><td><br><strong>Total registros: </strong> {{t_productos}}</td>
+	
+  <td><br><strong>Total salida: </strong> </td>
+  <td><br><strong>{{total_ingresos}} Bs.</strong></td>
+  <td colspan="2"><br>Fecha de reporte: {{fecha}}</td>
+</tr>
+</table>
+</div>

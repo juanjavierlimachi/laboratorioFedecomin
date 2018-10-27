@@ -1,0 +1,38 @@
+<div class="table-responsive">
+<table class="table table-hover table-striped">
+	<tr><td colspan="7" align="center">LISTA DE SALIDAS DEL MES ACTUAL: {% now "m - Y" %}</td></tr>
+<tr class="success">
+	<td>Fecha de registro</td>
+	<td>Detalle</td>
+	<td>Monto</td>
+	<td>Registrado Por:</td>
+	<td>Observaciones</td>
+	<td>Editar</td>
+	<td>Estado</td>
+</tr>
+{% for i in datos %}
+		<tr>
+			<td>{{i.fecha_registro|date:"d-m-Y"}}</td>
+			<td>{{i.Detalle}}</td>
+			<td>{{i.Monto}}</td>
+			<td>{{i.Usuario.get_full_name|upper}}</td>
+			<td>{{i.Observaciones}}</td>
+			<td>
+				<a href="/editSalida/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>
+				</span></a>
+			</td>
+			<td>{% if i.estado %}
+				<a href="/deleteSalida/{{i.id}}/" style="color:red;">
+					<span><img src="/static/img/icon_success.gif"></span></a>
+			{% else %}
+				
+				<a href="/RecuperarSalida/{{i.id}}/" style="color:red;">
+					<span><img src="/static/img/icon_error.gif"></span></a>
+			{% endif %}
+		</td>
+		</tr>
+{% endfor %}
+<tr> <td colspan="2"><strong>Total Registros: </strong> {{cont}}</td> </tr>
+</table>
+</div>
+<script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>

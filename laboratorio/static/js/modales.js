@@ -14,7 +14,7 @@ $("table tr td a").on("click",function(e){
 				}
 			});
 			function Espera(){
-        		$("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+        		$("#FormAjax").html('<img src="/static/img/log.gif" id="icono"></img><br>Procesando...');
      		}
 		}
 

@@ -1,0 +1,29 @@
+<script type="text/javascript">
+$('#Tipo').submit(function(e){
+		e.preventDefault();
+		var dato=$(this).serialize();
+		console.log(dato);
+		$.ajax({
+			type:'POST',
+			url:'/editSalida/'+{{ids}}+'/',
+			data: dato,
+			error:errores,
+			success:function(resp){
+				$(".card").html(resp);
+				VerSalidas();
+			}
+		});
+		function errores(){
+		    alert("Datos Incorrectos !!");
+		}
+	});
+</script>
+<div class="table-responsive">
+<div class="card">
+	<p id="texto">Editar Información</p>
+<form method="POST" id="Tipo">{% csrf_token %}
+	{{forms}}<br>
+	<button class="btn btn-success">Editar</button>
+</form>
+</div>
+</div>

@@ -14,12 +14,8 @@
 			<td>{{i.Abreviatura}}</td>
 			<td>{{i.fecha_registro|date:"d-m-Y"}}</td>
 			<td>
-				{% if user.is_active and user.is_superuser %}
 				<a href="/editElemento/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>
 				</span></a>
-				{% else %}
-					<span class="glyphicon glyphicon-info-sign"></span>
-				{% endif %}
 			</td>
 			<td>{% if i.estado %}
 				<a href="/deleteElemento/{{i.id}}/" style="color:red;">
@@ -32,7 +28,7 @@
 		</td>
 		</tr>
 {% endfor %}
-<tr> <td>Total Registros:{{cliente}}</td> </tr>
+<tr> <td><strong>Total Registros: </strong> {{cliente}}</td> </tr>
 </table>
 </div>
 <script type="text/javascript" src="{{STATIC_URL}}js/modales.js"></script>

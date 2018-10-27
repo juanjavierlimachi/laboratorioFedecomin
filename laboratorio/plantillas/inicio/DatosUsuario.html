@@ -26,10 +26,18 @@
 		{% endif %}
 	</td>
 	<td>
-	{% if j.is_active %}
-			<span><a href="/UsuarioVer/{{j.id}}/"><img src="/static/img/icon_success.gif"></a></span>
-		{% else %}
-			<span><a href="/UsuarioVer/{{j.id}}/"><img src="/static/img/icon_error.gif"></a></span>
+	{% if user.is_active and user.is_superuser %}
+		{% if j.is_active %}
+				<span><a href="/UsuarioVer/{{j.id}}/"><img src="/static/img/icon_success.gif"></a></span>
+			{% else %}
+				<span><a href="/UsuarioVer/{{j.id}}/"><img src="/static/img/icon_error.gif"></a></span>
+		{% endif %}
+	{% else %}
+		{% if j.is_active %}
+				<span><img src="/static/img/icon_success.gif"></span>
+			{% else %}
+				<span><img src="/static/img/icon_error.gif"></span>
+		{% endif %}
 	{% endif %}
 	</td>
 </tr>
@@ -37,7 +45,7 @@
 		{% endfor %}
 	{% endfor %}
 	<tr>
-		<td>Usuarios:{{t_user}}</td>
+		<td><strong>Usuarios: </strong> {{t_user}}</td>
 	</tr>
 	</table>
 </div>

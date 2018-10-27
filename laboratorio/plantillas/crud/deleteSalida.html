@@ -1,0 +1,18 @@
+<label>Esta Seguro de dar de baja la salida: <br>
+	<strong>{{dato.Detalle|upper}} <br>Monto: {{dato.Monto}}</strong>
+</label>
+ <div class="modal-footer">
+    <button class="btn btn-danger" type="button" onclick="DelSalida();">Confirmar</button>
+  </div>
+  <script type="text/javascript">
+function DelSalida(){
+	$.ajax({
+		type:'GET',
+		url:'/Delete_salida/'+{{dato.id}}+'/',
+		success:function(resp){
+			$("#ventanas").html(resp);
+			VerSalidas();
+		}
+	});
+}
+  </script>

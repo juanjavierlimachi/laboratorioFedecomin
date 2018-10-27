@@ -17,7 +17,6 @@ from django.template.loader import render_to_string
 from django.db.models import Sum
 # Create your views here.
 def BuscarCliente(request):
-
 	return render(request,"producto/BuscarCliente.html")
 
 def RegistroProductoView(request,id):
@@ -53,7 +52,6 @@ def VerProductos(request):
 		'cant':cant
 		}
 	return render(request,"producto/VerProductos.html",dic)
-
 def BuscarCliente_view(request):
 	if request.method=="POST":
 		texto=request.POST["cliente"]
@@ -219,7 +217,22 @@ def CrearReportes(request):
 		'total_ingresos':total_ingresos
 		}
 	return render(request,"producto/CrearReportes.html",dic)
-
+def CrearSalidas(request):
+	fecha=datetime.now()
+	final="%s-%s-%s" % (fecha.year,fecha.month,fecha.day)#fecha actual del sistema
+	inicio="%s-%s-01" % (fecha.year,fecha.month)
+	productos=Salida.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).order_by("-id")
+	clientes=User.objects.filter(is_active=True).order_by("-id")
+	cant=Salida.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).count()
+	obj = Salida.objects.filter(fecha_registro__range=(inicio,fecha),estado=True).aggregate(Sum('Monto'))
+	total_ingresos = obj["Monto__sum"]
+	dic={
+		'productos':productos,
+		'clientes':clientes,
+		'cant':cant,
+		'total_ingresos':total_ingresos
+		}
+	return render(request,"crud/CrearSalidas.html",dic)
 def outProduct(request):
 	if request.method=='POST':
 		fecha=datetime.now()
@@ -264,7 +277,50 @@ def outProduct(request):
 				'final':final.date() - timedelta(days=1)
 			}
 			return render_to_response('producto/outProduct.html',dat,context_instance=RequestContext(request))
+def ReportesSalidas(request):
+	if request.method=='POST':
+		fecha=datetime.now()
+		fe="%s-%s-%s" % (fecha.day,fecha.month,fecha.year)#fecha actual del sistema
 
+		inicio=datetime.strptime(request.POST['inicio'],"%d/%m/%Y")
+		print "inicio",inicio
+		final=datetime.strptime(request.POST['final'],"%d/%m/%Y")
+		print "final",final
+		if str(inicio) > str(final):
+			return HttpResponse("Error: La Fecha inicio No pueder ser Mayor a la Fecha Final.")
+		final = final + timedelta(days=1)
+		user=int(request.POST['user'])
+		print "el usuario",user
+		if user != 0:
+			t_productos=Salida.objects.filter(Usuario_id=user,fecha_registro__range=(inicio,final),estado=True).count()
+			productos=Salida.objects.filter(Usuario_id=user,fecha_registro__range=(inicio,final),estado=True)
+			cliente = User.objects.get(id=user)
+			client = User.objects.get(id=user)
+			obj = Salida.objects.filter(Usuario_id=user,fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Monto'))
+			total_ingresos = obj["Monto__sum"]
+			dat={
+				'total_ingresos':total_ingresos,
+				'productos':productos,
+				't_productos':t_productos,
+				'cliente':cliente,
+				'client':client,
+				'inicio':inicio.date(),
+				'final':final.date() - timedelta(days=1)
+			}
+			return render_to_response('producto/ReportesSalidas.html',dat,context_instance=RequestContext(request))
+		else:
+			t_productos=Salida.objects.filter(fecha_registro__range=(inicio,final),estado=True).count()
+			productos=Salida.objects.filter(fecha_registro__range=(inicio,final),estado=True)
+			obj = Salida.objects.filter(fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Monto'))
+			total_ingresos = obj["Monto__sum"]
+			dat={
+				'total_ingresos':total_ingresos,
+				'productos':productos,
+				't_productos':t_productos,
+				'inicio':inicio.date(),
+				'final':final.date() - timedelta(days=1)
+			}
+			return render_to_response('producto/ReportesSalidas.html',dat,context_instance=RequestContext(request))
 def InprimirIngresoProductos(request, id,inicio, final):
 	inicio=inicio
 	inicio=datetime.strptime(inicio,"%d-%m-%Y")
@@ -311,7 +367,52 @@ def InprimirIngresoProductos(request, id,inicio, final):
 			}
 			html=render_to_string('producto/InprimirIngresoProductos.html',dat,context_instance=RequestContext(request))
 			return generar_pdf(html)
-
+def InprimirSalidaProductos(request,id,inicio, final):
+	inicio=inicio
+	inicio=datetime.strptime(inicio,"%d-%m-%Y")
+	final=final
+	final=datetime.strptime(final,"%d-%m-%Y")
+	if request.method=='GET':
+		fecha=datetime.now()
+		if str(inicio) > str(final):
+			return HttpResponse("Error La Fecha Inicio No pueder ser Mayor a la Fecha Final.")
+		final = final + timedelta(days=1)
+		if int(id) != 0:
+			t_productos=Salida.objects.filter(Usuario_id=id,fecha_registro__range=(inicio,final),estado=True).count()
+			productos=Salida.objects.filter(Usuario_id=id,fecha_registro__range=(inicio,final),estado=True)
+			cliente = User.objects.get(id=id)
+			client = User.objects.get(id=id)
+			obj = Salida.objects.filter(Usuario_id=id,fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Monto'))
+			total_ingresos = obj["Monto__sum"]
+			dat={
+				'pagesize':'A4',
+				'productos':productos,
+				't_productos':t_productos,
+				'cliente':cliente,
+				'client':client,
+				'inicio':inicio.date(),
+				'final':final.date() - timedelta(days=1),
+				'fecha':fecha.date(),
+				'total_ingresos':total_ingresos
+			}
+			html=render_to_string('producto/InprimirSalidaProductos.html',dat,context_instance=RequestContext(request))
+			return generar_pdf(html)
+		else:
+			t_productos=Salida.objects.filter(fecha_registro__range=(inicio,final),estado=True).count()
+			productos=Salida.objects.filter(fecha_registro__range=(inicio,final),estado=True)
+			obj = Salida.objects.filter(fecha_registro__range=(inicio,final),estado=True).aggregate(Sum('Monto'))
+			total_ingresos = obj["Monto__sum"]
+			dat={
+				'pagesize':'A4',
+				'productos':productos,
+				't_productos':t_productos,
+				'inicio':inicio.date(),
+				'final':final.date() - timedelta(days=1),
+				'fecha':fecha.date(),
+				'total_ingresos':total_ingresos
+			}
+			html=render_to_string('producto/InprimirSalidaProductos.html',dat,context_instance=RequestContext(request))
+			return generar_pdf(html)
 def editCliente(request, id):
 	dato=Cliente.objects.get(id=int(id))
 	if request.method=='POST':
@@ -483,4 +584,49 @@ def ImprimirDuplicado(request, id):
 	html=render_to_string('crud/ImprimirDuplicado.html',dic,context_instance=RequestContext(request))
 	return generar_pdf(html)
 
+def registroSalidas(request):
+	Usuario=Salida(Usuario=request.user)
+	if request.method =='POST':
+		forms=FormSalida(request.POST,instance=Usuario)
+		if forms.is_valid():
+			forms.save()
+			return HttpResponse("ok")
+		else:
+			return HttpResponse("Error")
+	else:
+		forms=FormSalida(instance=Usuario)
+	return render(request,'crud/registroSalidas.html',{'forms':forms})
 
+def VerSalidas(request):
+	fecha=datetime.now()
+	final="%s-%s-%s" % (fecha.year,fecha.month,fecha.day)#fecha actual del sistema
+	inicio="%s-%s-01" % (fecha.year,fecha.month)
+	datos = Salida.objects.filter(fecha_registro__range=(inicio,fecha)).order_by("-id")
+	cont=Salida.objects.all().count()
+	dic={
+		'datos':datos,
+		'cont':cont
+		}
+	return render(request,'crud/VerSalidas.html',dic)
+def editSalida(request,id):
+	dato=Salida.objects.get(id=int(id))
+	if request.method=='POST':
+		forms=FormSalida(request.POST,instance=dato)
+		if forms.is_valid():
+			forms.save()
+			return HttpResponse("La información se actualizó correctamente.")
+	else:
+		forms=FormSalida(instance=dato)
+	return render(request,'crud/editSalida.html',{'forms':forms,'ids':id})
+def deleteSalida(request, id):
+	dato=Salida.objects.get(id=int(id))
+	return render(request,'crud/deleteSalida.html',{'dato':dato})
+def Delete_salida(request, id):
+	Salida.objects.filter(id=int(id)).update(estado=False)
+	return HttpResponse("La información se dió de baja correctamente.")
+def RecuperarSalida(request,id):
+	dato=Salida.objects.get(id=int(id))
+	return render(request,'crud/RecuperarSalida.html',{'dato':dato})
+def recuperar_salida(request, id):
+	Salida.objects.filter(id=int(id)).update(estado=True)
+	return HttpResponse("La información se dió de alta correctamente.")

@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<div class="table-responsive">
+<table class="table table-hover table-striped">
+	<tr><td colspan="5" align="center">
+		{% if client.get_full_name %}
+			<strong>SALIDAS DE EFECTIVO DEL USUARIO:</strong> {{cliente.get_full_name|upper}} <br><strong>DESDE:</strong> {{inicio}} <strong>HASTA</strong> {{final}}
+		{% else %}
+			<strong>REPORTE GENERAL DESDE:</strong> {{inicio}} <strong>HASTA</strong> {{final}}
+		{% endif %}
+	</td></tr>
+
+<tr class="success">
+	<td>Fecha de registro</td>
+	<td>Detalle</td>
+	<td>Monto</td>
+	<td>Registrado Por:</td>
+	<td>Observaciones</td>
+</tr>
+{% for i in productos %}
+	<tr>
+		<td>{{i.fecha_registro|date:"d-m-Y"}}</td>
+      <td>{{i.Detalle}}</td>
+      <td>{{i.Monto}}</td>
+      <td>{{i.Usuario.get_full_name|upper}}</td>
+      <td>{{i.Observaciones}}</td>
+	</tr>
+	{% empty %}
+	<tr><td colspan="5" align="center">No hay registros de salida, ó esta en baja</td></tr>
+{% endfor %}
+<tr><td><strong>Total registros: </strong> {{t_productos}}</td>
+	
+  <td><strong>Total salida: </strong></td>
+  <td><strong> {{total_ingresos}} Bs.</strong></td>
+</tr>
+</table>
+</div>

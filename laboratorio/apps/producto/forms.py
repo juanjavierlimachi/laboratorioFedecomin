@@ -27,3 +27,7 @@ class FormResultado(ModelForm):
 	class Meta():
 		model = Resultado
 		exclude=('estado','producto',)
+class FormSalida(ModelForm):
+	class Meta():
+		model = Salida
+		exclude=('estado','Usuario',)

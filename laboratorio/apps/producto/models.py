@@ -44,3 +44,15 @@ class Resultado(models.Model):
 	fecha_registro = models.DateTimeField(auto_now=True)
 	def __unicode__(self):
 		return self.producto.Nro_de_Lote
+
+class Salida(models.Model):
+	Detalle=models.TextField(max_length=200)
+	Monto=models.PositiveIntegerField()
+	Observaciones=models.CharField(max_length=150,blank=True,null=True)
+	fecha_registro=models.DateTimeField(auto_now=True)
+	Usuario=models.ForeignKey(User)
+	estado=models.BooleanField(default=True)
+	def __unicode__(self):
+		return self.Detalle
+
+

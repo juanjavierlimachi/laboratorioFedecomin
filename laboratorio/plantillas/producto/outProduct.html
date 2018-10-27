@@ -60,11 +60,11 @@ $("table tr td a").on("click",function(e){
 		</td>
 	</tr>
 	{% empty %}
-	<tr><td colspan="11" align="center">No hay registros, o el producto esta en baja</td></tr>
+	<tr><td colspan="11" align="center">No hay registros de ingreso, o el producto esta en baja</td></tr>
 {% endfor %}
 <tr><td colspan="2"><strong>Total registros: </strong> {{t_productos}}</td>
 	
-  <td></td><td></td><td></td><td></td><td></td><td colspan="2"><strong>Total Ingreso: </strong> {{total_ingresos}}</td>
+  <td></td><td></td><td></td><td></td><td></td><td colspan="3"><strong>Total Ingreso: {{total_ingresos}} Bs.</strong> </td>
 </tr>
 </table>
 </div>

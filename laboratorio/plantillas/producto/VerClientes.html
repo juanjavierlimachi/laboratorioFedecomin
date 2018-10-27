@@ -21,11 +21,7 @@
 			<td>{{i.Celular}}</td>
 			<td>{{i.fecha_registro|date:"d-m-Y"}}</td>
 			<td>
-				{% if user.is_active and user.is_superuser %}
 				<a href="/editCliente/{{i.id}}/" title="Editar este registro"><span class="glyphicon glyphicon-pencil"></span></a>
-				{% else %}
-					<span class="glyphicon glyphicon-info-sign"></span>
-				{% endif %}
 			</td>
 			<td>{% if i.estado %}
 				<a href="/deleteCliente/{{i.id}}/" title="Dar de baja esta información"><span><img src="/static/img/icon_success.gif"></span></a>

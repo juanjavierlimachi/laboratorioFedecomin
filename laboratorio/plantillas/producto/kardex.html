@@ -52,7 +52,6 @@
 				{% endfor %}
 
 	<tr>
-	{% if user.is_active and user.is_superuser %}
 		<td>
 			<a href="/editProducto/{{producto.id}}/" title="Editar producto" type="button" class="btn btn-default">
 				Editar Datos
@@ -69,9 +68,6 @@
 			</a>
 		</td>
 		{% endif %}
-	{% else %}
-  		<td><span class="glyphicon glyphicon-info-sign"></span></td>
-  	{% endif %}
   	<td>
   		
   	</td>

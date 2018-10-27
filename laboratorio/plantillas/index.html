@@ -162,6 +162,45 @@ function CrearReportes(){
       $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
     }
 }
+function RegistroSalida(){
+  $.ajax({
+      type:'GET',
+      url:'/registroSalidas/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
+function VerSalidas(){
+  $.ajax({
+      type:'GET',
+      url:'/VerSalidas/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
+function CrearSalidas(){
+    $.ajax({
+      type:'GET',
+      url:'/CrearSalidas/',
+      beforeSend:Espera,
+      success:function(resp){
+        $("#FormAjax").html(resp);
+      }
+    });
+     function Espera(){
+      $("#FormAjax").html('<img src="{{STATIC_URL}}img/log.gif" id="icono"></img><br>Procesando...');
+    }
+}
   </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -287,17 +326,31 @@ function CrearReportes(){
          Optionally, you can add icons to the links -->
         <li class="active"><a href="/"><i class="glyphicon glyphicon-home"></i> <span>Inicio</span></a></li>
         <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span>Ingresos</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="RegistroProducto()">Registrar Ingreso</a></li>
+            <li><a href="#" onclick="VerProductos()">Ver Ingresos</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-usd"></i> <span>Salidas</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="RegistroSalida()">Registrar Salida</a></li>
+            <li><a href="#" onclick="VerSalidas()">Ver Salidas</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-briefcase"></i> <span>Crear Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a href="#" onclick="CrearReportes()">Reportes de Ingreso</a></li>
+            <li><a href="#" onclick="CrearSalidas()">Reportes de Salida</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
           <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Clientes</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
             <li><a href="#" onclick="NewClient()">Nuevo Cliente</a></li>
             <li><a href="#" onclick="VerClientes()">Ver Clientes</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span>Análisis</span> <i class="fa fa-angle-left pull-right"></i></a>
-          <ul class="treeview-menu">
-            <li><a href="#" onclick="RegistroProducto()">Nuevo Análisis</a></li>
-            <li><a href="#" onclick="VerProductos()">Ver Análisis</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -308,16 +361,11 @@ function CrearReportes(){
           </ul>
         </li>
         <li class="treeview">
-          <a href="#"><i class="glyphicon glyphicon-briefcase"></i> <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
-          <ul class="treeview-menu">
-            <li><a href="#" onclick="CrearReportes()">Crear reportes</a></li>
-            
-          </ul>
-        </li>
-        <li class="treeview">
           <a href="#"><i class="glyphicon glyphicon-user"></i> <span>Usuarios</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu">
-            <li><a href="#" onclick="NewUser()">Nuevo Usuario</a></li>
+            {% if user.is_active and user.is_superuser %}
+              <li><a href="#" onclick="NewUser()">Nuevo Usuario</a></li>
+            {% endif %}
             <li><a href="#" onclick="DatosUser()" >Ver Usuarios</a></li>
           </ul>
         </li>

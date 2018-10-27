@@ -1,0 +1,18 @@
+<label>Esta Seguro de dar de alta la salida: <br>
+	<strong>{{dato.Detalle|upper}} <br>Monto: {{dato.Monto}}</strong>
+</label>
+ <div class="modal-footer">
+    <button class="btn btn-danger" type="button" onclick="DelCliente();">Confirmar</button>
+  </div>
+  <script type="text/javascript">
+	function DelCliente(){
+		$.ajax({
+			type:'GET',
+			url:'/recuperar_salida/'+{{dato.id}}+'/',
+			success:function(resp){
+				$("#ventanas").html(resp);
+				VerSalidas();
+			}
+		});
+	}
+  </script>
