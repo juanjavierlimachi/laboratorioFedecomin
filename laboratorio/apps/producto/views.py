@@ -602,7 +602,7 @@ def VerSalidas(request):
 	final="%s-%s-%s" % (fecha.year,fecha.month,fecha.day)#fecha actual del sistema
 	inicio="%s-%s-01" % (fecha.year,fecha.month)
 	datos = Salida.objects.filter(fecha_registro__range=(inicio,fecha)).order_by("-id")
-	cont=Salida.objects.all().count()
+	cont=Salida.objects.filter(fecha_registro__range=(inicio,fecha)).count()
 	dic={
 		'datos':datos,
 		'cont':cont

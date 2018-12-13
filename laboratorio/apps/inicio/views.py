@@ -98,6 +98,7 @@ def editar_perfil(request):
 			user_form.save()
 			perfil_form.save()
 			return HttpResponse("Actualizaste tu perfil correctamente.")
+			
 	else:
 		user_form=UserForms(instance=request.user)
 		perfil_form=formPerfiles(instance=request.user.perfil)
